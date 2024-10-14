@@ -370,7 +370,7 @@ Dependiendo de como se configure el Cluster, etcd se despliega de forma diferent
 
 \paragraph{Installing etcd-cluster}
 
-Si has arrancado tu Cluster de K8s utilizando la herramienta \textbf{kubeadmin}, tu \textbf{etcd-cluster} se generara automaticamente ya configurado. Pero si estás configurando el hardware del Cluster desde cero, entonces el \textbf{etcd-cluster} está disponible como binario en la página de K8s release.
+Si has arrancado tu Cluster de K8s utilizando la herramienta \verb|kubeadm|, tu \textbf{etcd-cluster} se generara automaticamente ya configurado. Pero si estás configurando el hardware del Cluster desde cero, entonces el \textbf{etcd-cluster} está disponible como binario en la página de K8s release.
 
 \begin{itemize}
     \item Descargar binario
@@ -404,17 +404,17 @@ Hay muchas variables que parametrizan el \textbf{etcd.service} por ahora es impo
     \item dirección donde escucha \textbf{etcd}
 \begin{codetemplate}{}
 \begin{verbatim}
---advertise-client-urls https://<IP>:2379 \\
+--advertise-client-urls https://<IP>:2379
 \end{verbatim}
 \end{codetemplate}
 
     \item Parametros para garantizar la seguridad de las comunicaciones con certificados \textbf{SSL/ TLS}
 \begin{codetemplate}{}
 \begin{verbatim}
---cert-file=/etc/etcd/kubernetes.pem \\
---key-file=/etc/etcd/kubernetes-key.pem \\
---peer-cert-file=/etc/etcd/kubernetes.pem \\
---peer-key-file=/etc/etcd/kubernetes-key.pem \\
+--cert-file=/etc/etcd/kubernetes.pem
+--key-file=/etc/etcd/kubernetes-key.pem
+--peer-cert-file=/etc/etcd/kubernetes.pem
+--peer-key-file=/etc/etcd/kubernetes-key.pem
 ...
 \end{verbatim}
 \end{codetemplate}
@@ -536,7 +536,7 @@ El \textbf{kube-apiserver} es el responsable de autenticar y validar todas las s
 
 \paragraph{Installing kube-apiserver}
 
-Si has arrancado tu Cluster de K8s utilizando la herramienta \textbf{kubeadmin}, tu \textbf{kube-apiserver} se generara automaticamente ya configurado. Pero si estás configurando el hardware del Cluster desde cero, entonces el \textbf{kube-apiserver} está disponible como binario en la página de K8s release.
+Si has arrancado tu Cluster de K8s utilizando la herramienta \verb|kubeadm|, tu \textbf{kube-apiserver} se generara automaticamente ya configurado. Pero si estás configurando el hardware del Cluster desde cero, entonces el \textbf{kube-apiserver} está disponible como binario en la página de K8s release.
 
 \begin{itemize}
     \item Descargar binario
@@ -575,9 +575,9 @@ Como todos los componentes se comunican entre ellos, todos ellos tendran configu
     \item Parametros para garantizar la seguridad de las comunicaciones entre los diferentes componentes, con certificados \textbf{SSL/ TLS}
 \begin{codetemplate}{}
 \begin{verbatim}
---etcd-cafile=/var/lib/kubernetes/ca.pem \\
---etcd-certfile=/var/lib/kubernetes/kubernetes.pem \\
---etcd-keyfile=/var/lib/kubernetes/kubernetes-key.pem \\
+--etcd-cafile=/var/lib/kubernetes/ca.pem
+--etcd-certfile=/var/lib/kubernetes/kubernetes.pem
+--etcd-keyfile=/var/lib/kubernetes/kubernetes-key.pem
 \end{verbatim}
 \end{codetemplate}
 
@@ -591,10 +591,10 @@ Como todos los componentes se comunican entre ellos, todos ellos tendran configu
 
 \paragraph{View kube-apiserver}
 
-\textbf{Con kubeadmin}
+\textbf{Con kubeadm}
 
 \begin{itemize}
-    \item Si lo hemos levantado con kubeadmin tool el \textbf{kube-apiserver} estará desplegado como un Pod dentro del namespace del \textbf{Master Node} == \textbf{kube-system namespace}:
+    \item Si lo hemos levantado con \verb|kubeadm| tool el \textbf{kube-apiserver} estará desplegado como un Pod dentro del namespace del \textbf{Master Node} == \textbf{kube-system namespace}:
 \begin{codetemplate}{}
 \begin{verbatim}
 $ kubectl get pods -n kube-system
@@ -610,9 +610,9 @@ $ cat /etc/kubernetes/manifests/kube-apiserver.yaml
 \end{codetemplate}
 \end{itemize}
 
-\textbf{Sin kubeadmin}
+\textbf{Sin kubeadm}
 \begin{itemize}
-    \item Si no hemos utilizado kubeadmin para levantar el Cluster de K8s, podemos ver las opciones accediendo a la definición del servicio en el sistema \verb|/etc/systemd/system/kube-apiserver.service|:
+    \item Si no hemos utilizado \verb|kubeadm| para levantar el Cluster de K8s, podemos ver las opciones accediendo a la definición del servicio en el sistema \verb|/etc/systemd/system/kube-apiserver.service|:
 \begin{codetemplate}{}
 \begin{verbatim}
 $ cat /etc/systemd/system/kube-apiserver.service
@@ -662,7 +662,7 @@ Se encarga de supervisar el estado de los diferentes \textbf{ReplicaSets}, compr
 
 \paragraph{Install Kube-Controller-Manager}
 
-Si has arrancado tu Cluster de K8s utilizando la herramienta \textbf{kubeadmin}, tu \textbf{kube-controller-manager} se generara automaticamente ya configurado. Pero si estás configurando el hardware del Cluster desde cero, entonces el \textbf{kube-controller-manager} está disponible como binario en la página de K8s release.
+Si has arrancado tu Cluster de K8s utilizando la herramienta \verb|kubeadm|, tu \textbf{kube-controller-manager} se generara automaticamente ya configurado. Pero si estás configurando el hardware del Cluster desde cero, entonces el \textbf{kube-controller-manager} está disponible como binario en la página de K8s release.
 
 \begin{itemize}
     \item Descargar binario
@@ -707,10 +707,10 @@ En caso de que alguno de los controladores no parezca funcionar o no exista, est
 
 \paragraph{View Kube-Controller-Manager}
 
-\textbf{Con kubeadmin}
+\textbf{Con kubeadm}
 
 \begin{itemize}
-    \item Como siempre, si levantamos nuestro Cluster con kubeadmin, el \textbf{kube-controller-manager} se levanta como un Pod en el namespace del \textbf{Master Node} == \textbf{kube-system namespace}:
+    \item Como siempre, si levantamos nuestro Cluster con \verb|kubeadm|, el \textbf{kube-controller-manager} se levanta como un Pod en el namespace del \textbf{Master Node} == \textbf{kube-system namespace}:
 \begin{codetemplate}{}
 \begin{verbatim}
 $ kubectl get pods -n kube-system
@@ -718,7 +718,7 @@ $ kubectl get pods -n kube-system
 \end{verbatim}
 \end{codetemplate}
 
-    \item También puedes acceder a su manifest dentro de la carpeta que kubeadmin utiliza para desplegar estos Pods:
+    \item También puedes acceder a su manifest dentro de la carpeta que \verb|kubeadm| utiliza para desplegar estos Pods:
 \begin{codetemplate}{}
 \begin{verbatim}
 cat /etc/kubernetes/manifests/kube-controller-manager.yaml
@@ -726,7 +726,7 @@ cat /etc/kubernetes/manifests/kube-controller-manager.yaml
 \end{codetemplate}
 \end{itemize}
 
-\textbf{Sin kubeadmin}
+\textbf{Sin kubeadm}
 
 \begin{itemize}
     \item Como siempre también, puedes inspeccionar las opciones viendo el servicio en si ejecutandose por el sistema:
@@ -768,7 +768,7 @@ Para ello, el \textbf{kube-scheduler} crea 2 etapas de filtros:
 
 \paragraph{Install Kube-Scheduler}
 
-Si has arrancado tu Cluster de K8s utilizando la herramienta \textbf{kubeadmin}, tu \textbf{kube-scheduler} se generara automaticamente ya configurado. Pero si estás configurando el hardware del Cluster desde cero, entonces el \textbf{kube-scheduler} está disponible como binario en la página de K8s release.
+Si has arrancado tu Cluster de K8s utilizando la herramienta \verb|kubeadm|, tu \textbf{kube-scheduler} se generara automaticamente ya configurado. Pero si estás configurando el hardware del Cluster desde cero, entonces el \textbf{kube-scheduler} está disponible como binario en la página de K8s release.
 
 \begin{itemize}
     \item Descargar binario
@@ -796,10 +796,10 @@ $ kube-scheduler.service
 
 \paragraph{Kube-Scheduler options}
 
-\textbf{Con kubeadmin}
+\textbf{kubeadm}
 
 \begin{itemize}
-    \item Como siempre, si levantamos nuestro Cluster con kubeadmin, el \textbf{kube-scheduler} se levanta como un Pod en el namespace del \textbf{Master Node} == \textbf{kube-system namespace}:
+    \item Como siempre, si levantamos nuestro Cluster con \verb|kubeadm|, el \textbf{kube-scheduler} se levanta como un Pod en el namespace del \textbf{Master Node} == \textbf{kube-system namespace}:
 \begin{codetemplate}{}
 \begin{verbatim}
 $ kubectl get pods -n kube-system
@@ -807,7 +807,7 @@ $ kubectl get pods -n kube-system
 \end{verbatim}
 \end{codetemplate}
 
-    \item También puedes acceder a su manifest dentro de la carpeta que kubeadmin utiliza para desplegar estos pods:
+    \item También puedes acceder a su manifest dentro de la carpeta que \verb|kubeadm| utiliza para desplegar estos pods:
 \begin{codetemplate}{}
 \begin{verbatim}
 cat /etc/kubernetes/manifests/kube-scheduler.yaml
@@ -815,7 +815,7 @@ cat /etc/kubernetes/manifests/kube-scheduler.yaml
 \end{codetemplate}
 \end{itemize}
 
-\textbf{Sin kubeadmin}
+\textbf{kubeadm}
 
 \begin{itemize}
     \item Como siempre también, puedes inspeccionar las opciones viendo el servicio en si ejecutandose por el sistema:
@@ -849,7 +849,7 @@ El \textbf{kubelet} constantemente monitoriza el estado de los pods y los conten
 
 El kubelet está disponible como binario en la página de K8s release.
 
-Si has arrancado tu Cluster de K8s utilizando la herramienta \textbf{kubeadmin}, tu \textbf{kubelet} se generara automaticamente ya configurado. Pero si estás configurando el hardware del Cluster desde cero, entonces el \textbf{kubelet} está disponible como binario en la página de K8s release.
+Si has arrancado tu Cluster de K8s utilizando la herramienta \verb|kubeadm|, tu \textbf{kubelet} se generara automaticamente ya configurado. Pero si estás configurando el hardware del Cluster desde cero, entonces el \textbf{kubelet} está disponible como binario en la página de K8s release.
 
 \begin{itemize}
     \item Descargar binario
@@ -876,7 +876,7 @@ $ kubelet.service
 \end{itemize}
 
 \begin{blocktemplateIII}{Warning}
-Si hemos levantado nuestro cluster de K8s con kubeadmin, este NO levanta automáticamente kubelets. \textbf{SIEMPRE debes instalar el kubelet en tus Worker Nodes}
+Si hemos levantado nuestro cluster de K8s con \verb|kubeadm|, este NO levanta automáticamente kubelets. \textbf{SIEMPRE debes instalar el kubelet en tus Worker Nodes}
 \end{blocktemplateIII}
 
 Una vez descargado podemos correrlo como un servicio:
@@ -930,7 +930,7 @@ Estos \textbf{Services} deben ser accesibles desde cualquier nodo del Cluster, �
 
 \paragraph{Install kube-proxy}
 
-Si has arrancado tu Cluster de K8s utilizando la herramienta \textbf{kubeadmin}, tu \textbf{kube-proxy} se generara automaticamente ya configurado. Pero si estás configurando el hardware del Cluster desde cero, entonces el \textbf{kube-proxy} está disponible como binario en la página de K8s release.
+Si has arrancado tu Cluster de K8s utilizando la herramienta \verb|kubeadm|, tu \textbf{kube-proxy} se generara automaticamente ya configurado. Pero si estás configurando el hardware del Cluster desde cero, entonces el \textbf{kube-proxy} está disponible como binario en la página de K8s release.
 
 \begin{itemize}
     \item Download binary
@@ -958,14 +958,14 @@ $ kube-proxy.service
 
 \paragraph{kube-proxy options}
 
-\textbf{With kubeadmin}
+\textbf{With kubeadm}
 
 \begin{blocktemplateI} {Note}
-If K8s Cluster is setup with \textbf{kubeadmin}, \textbf{kube-proxy} it deploys as \textbf{DaemonSet}. That means that a \textbf{kube-proxy} Pod will be deployed on every Node of the K8s Cluster. Without Kubeadmin it should be done it by hand.
+If K8s Cluster is setup with \verb|kubeadm|, \textbf{kube-proxy} it deploys as \textbf{DaemonSet}. That means that a \textbf{kube-proxy} Pod will be deployed on every Node of the K8s Cluster. Without \verb|kubeadm| it should be done it by hand.
 \end{blocktemplateI}
 
 \begin{itemize}
-    \item If K8s Cluster is setup with \textbf{kubeadmin}, \textbf{kube-proxy} runs as Pod in every Node of K8s Cluster as \textbf{DaemonSet}
+    \item If K8s Cluster is setup with \verb|kubeadm|, \textbf{kube-proxy} runs as Pod in every Node of K8s Cluster as \textbf{DaemonSet}
 \begin{codetemplate}{}
 \begin{verbatim}
 $ kubectl get daemonset -n kube-system
@@ -973,7 +973,7 @@ $ kubectl get daemonset -n kube-system
 \end{verbatim}
 \end{codetemplate}
 
-    \item También puedes acceder a su manifest dentro de la carpeta que kubeadmin utiliza para desplegar estos pods:
+    \item También puedes acceder a su manifest dentro de la carpeta que \verb|kubeadm| utiliza para desplegar estos pods:
 \begin{codetemplate}{}
 \begin{verbatim}
 cat /etc/kubernetes/manifests/kube-proxy.yaml
@@ -981,7 +981,7 @@ cat /etc/kubernetes/manifests/kube-proxy.yaml
 \end{codetemplate}
 \end{itemize}
 
-\textbf{Sin kubeadmin}
+\textbf{Sin kubeadm}
 
 \begin{itemize}
     \item Como siempre también, puedes inspeccionar las opciones viendo el servicio en si ejecutandose por el sistema:
@@ -1491,8 +1491,252 @@ spec:
 \end{verbatim}
 \end{codetemplate}
 
-\subsection{ReplicaSet}
+\subsection{Images Used by Pods}
 
+\subsubsection{Introduction to Container Registries}
+An \textbf{container registry or image registry} (also called an \textbf{image repository}) is a centralized platform or service that stores, manages, and distributes container images. These images are essential for deploying and running containerized applications using technologies like Docker or Kubernetes. Below is a breakdown of the key concepts:
+\textbf{Container Images}: A container image is a lightweight, standalone package that includes everything needed to run a piece of software, such as the application code, runtime, libraries, and system tools. These images are used by container runtimes (like Docker or Kubernetes) to create and run containers.
+    
+\textbf{Registry/Repository}: While the terms \textbf{registry} and \textbf{repository} are sometimes used interchangeably, they have distinct meanings:
+\begin{itemize}
+    \item A \textbf{repository} is a collection of related container images, often grouped by versions (tags). For example, a repository might contain different versions of a web application (e.g., \texttt{v1.0}, \texttt{v2.0}).
+    \item A \textbf{registry} is a service that hosts repositories and provides APIs for uploading, managing, and retrieving container images. It acts as a centralized hub where developers can store and share their container images.
+\end{itemize}
+    
+\textbf{Key Functions of a Container Registry}:
+\begin{itemize}
+    \item \textbf{Storage}: Stores multiple versions of container images, allowing for version control and management.
+    \item \textbf{Distribution}: Provides access to images, allowing teams or automated systems to pull the images for use in different environments (development, testing, production).
+    \item \textbf{Security}: Often includes features like access control, image scanning for vulnerabilities, and signing images to ensure their integrity.
+    \item \textbf{Organization}: Helps organize and manage images by namespaces, repositories, and tags.
+\end{itemize}
+    
+\textbf{Examples of Popular Container Registries}:
+\begin{itemize}
+    \item \textbf{Docker Hub}: A public registry managed by Docker where anyone can publish or access images.
+    \item \textbf{Google Container Registry (GCR)} and \textbf{Amazon Elastic Container Registry (ECR)}: Cloud-specific registries provided by Google Cloud and AWS, respectively, for managing container images in cloud-based applications.
+    \item \textbf{Harbor}: An open-source, on-premise container registry that offers enhanced security and performance.
+\end{itemize}
+
+In short, an \textbf{container registry} is a key part of the container ecosystem, enabling teams to efficiently manage, share, and deploy containerized applications.
+
+\subsubsection{How can I specify registry for Docker?}
+In docker there are two ways of specify the registry:
+\begin{itemize}
+    \item \textbf{Using the docker login command:}
+\begin{codetemplate}{}
+\begin{verbatim}
+$ docker login <registry_fqdn>:<registry_port>
+\end{verbatim}
+\end{codetemplate}
+\begin{codetemplate}{}
+\begin{verbatim}
+$ docker login <registry_fqdn>:<registry_port> -u <username> -p <password>
+\end{verbatim}
+\end{codetemplate}
+\begin{blocktemplateI}{NOTE}
+The port is not mandatory, there are many public registries which accepts the query without port.
+\end{blocktemplateI}
+
+    \item \textbf{Editing docker configuration} in \verb|/etc/docker/daemon.json|
+\begin{codetemplate}{}
+\begin{verbatim}
+{
+    "insecure-registries" : [
+        "<registry_fqdn>:<registry_port>"
+    ],
+    "registry-mirrors": [
+        "<registry_fqdn>:<registry_port>"
+    ]
+}
+\end{verbatim}
+\end{codetemplate}
+\end{itemize}
+
+\begin{blocktemplateII}{NOTE}
+A mirror in the context of Docker registries is essentially a duplicate of a registry that serves the same images as the original. Mirroring is useful for:
+
+\begin{itemize}
+    \item \textbf{Load Balancing}: Distributing image pulls across multiple servers to reduce the load on a single registry.
+    \item \textbf{Improved Availability}: If one registry goes down, clients can still pull images from the mirror.
+    \item \textbf{Geographic Proximity}: Providing a closer registry for users in different regions can reduce latency and improve pull speeds.
+    \item \textbf{Caching}: Mirrored registries can cache images that are frequently pulled, which can be beneficial in large environments with multiple users or CI/CD pipelines.
+\end{itemize}
+
+When you specify a mirror in your Docker configuration, Docker will check the mirror for images first before falling back to the primary registry.
+\end{blocktemplateII}
+
+
+\begin{blocktemplate}{NOTE 2}
+If your \textbf{registry is secured} and uses TLS (Transport Layer Security), \textbf{you do not need to specify anything} on your \verb|/etc/docker/daemon.json|. You can have a config like this:
+\begin{codetemplate}{}
+\begin{verbatim}
+{
+    "insecure-registries": [],
+    "registry-mirrors": [],
+    "log-driver": "json-file",
+    "storage-driver": "overlay2"
+}
+\end{verbatim}
+\end{codetemplate}
+Instead of adding the configuration to \verb|/etc/docker/daemon.json|, you should ensure that \textbf{Docker is configured to trust the TLS certificates} presented by your registry.
+\\\\
+Take into account that the registry should be correctly configured to serve over HTTPS with the TLS certificate properly installed. 
+\\\\
+If you are using a \textbf{self-signed certificate or a certificate from a private CA}, you need to add the CA certificate to Docker's trusted certificates:
+\begin{codetemplate}{}
+\begin{verbatim}
+/etc/docker/certs.d/<registry_fqdn>:<registry_port>/ca.crt
+\end{verbatim}
+\end{codetemplate}
+\end{blocktemplate}
+
+\subsubsection{How can I specify registry for K8s?}
+Kubernetes does \textbf{not automatically inherit any custom Docker registry configuration} (such as \verb|docker login| or Docker's \verb|/etc/docker/daemon.json|). This is because Kubernetes uses its own container runtime (which could be Docker, containerd, or another runtime).
+
+The most explicit way to ensure Kubernetes pulls images from the correct registry is to \textbf{fully specify the registry in the image field of your Pod} or Deployment manifests. But whay if you need autentication on the registry?
+
+If you're using a private registry that requires authentication, you can configure Kubernetes to use specific credentials via image pull secrets. This way, every time the Pod pulls an image from the registry, it will authenticate correctly.
+
+\begin{enumerate}
+    \item \textbf{Create a Secret:}
+\begin{codetemplate}{}
+\begin{verbatim}
+$ kubectl create secret docker-registry myregistrykey \
+  --docker-server=https://pearl.harbor:8443 \
+  --docker-username=myusername \
+  --docker-password=mypassword \
+  --docker-email=myemail@example.com
+\end{verbatim}
+\end{codetemplate}
+
+    \item Attach the Secret to Your Pod or Deployment: You can specify the secret in the imagePullSecrets section of your manifest:
+\begin{codetemplate}{}
+\begin{verbatim}
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mypod
+spec:
+  containers:
+  - name: mycontainer
+    image: pearl.harbor:8443/myproject/myimage:latest
+  imagePullSecrets:
+  - name: myregistrykey
+\end{verbatim}
+\end{codetemplate}
+\end{enumerate}
+
+\subsubsection{How is that I don't specify anyone and I can pull images?}
+This is because if you don't specify any registry in Docker 
+or K8s, for both the \textbf{default registry} is \textbf{Docker Hub (docker.io)}.
+
+\subsubsection{Docker commands to interact with Registries}
+Search for all images with specific name on your configured registries:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ docker search <image_name>
+\end{verbatim}
+\end{codetemplate}
+
+To download images from specific registry:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ docker pull registry[:<port>]/<image_name>:<image_tag>
+\end{verbatim}
+\end{codetemplate}
+
+Save a Docker image into a tar file:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ docker save -o my_image.tar <image_name_or_id>
+\end{verbatim}
+\end{codetemplate}
+
+Load Docker image from tar file:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ docker load -i my_image.tar
+\end{verbatim}
+\end{codetemplate}
+
+Save the changes made inside a running or stopped container into a new Docker image:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ docker commit <container_id_or_name> <new_image_name:tag>
+\end{verbatim}
+\end{codetemplate}
+
+\begin{blocktemplateI}{NOTE}
+You can add a commit message with the -m option to describe the changes made in the container:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ docker commit -m "Installed mtr" <container_id_or_name> <new_image_name:tag>
+\end{verbatim}
+\end{codetemplate}
+You can also specify the author of the commit using the -a option:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ docker commit -a "titocampis" <container_id_or_name> <new_image_name:tag>
+\end{verbatim}
+\end{codetemplate}
+\end{blocktemplateI}
+
+\begin{blocktemplateIII}{WARNING}
+While the \textbf{docker commit} command allows you to save changes from a container to a new image, \textbf{it is not recommended for production or long-term projects}. This command captures the current state of a container's filesystem, but it \textbf{lacks transparency, reproducibility, and version control}—key practices in containerized environments.
+
+\textbf{Why This Is Not a Best Practice}:
+\begin{itemize} 
+    \item \textbf{Lack of Documentation}: The changes made inside a container are not easily traceable, which can lead to confusion about how the image was created. 
+    \item \textbf{No Version Control}: There's no way to track incremental changes, making it difficult to maintain or update the image over time. 
+    \item \textbf{Reproducibility}: \verb|docker commit| does not capture the configuration (like environment variables, exposed ports, or volumes). This can lead to inconsistencies between different environments or when others try to reproduce your setup. 
+\end{itemize}
+
+\textbf{Best Practice: Use a Dockerfile Instead}
+The \textbf{proper way to create Docker images} is by using a \textbf{Dockerfile}, which allows you to: 
+\begin{itemize} 
+    \item \textbf{Explicitly define} all the steps needed to build the image. 
+    \item \textbf{Version and track} changes in source control (e.g., Git), ensuring consistent builds. 
+    \item \textbf{Easily reproduce} the environment across different systems and teams. 
+\end{itemize}
+
+By following best practices and using a \textbf{Dockerfile}, you ensure a \textbf{maintainable}, \textbf{reliable}, and \textbf{scalable} approach to containerized application development.
+\end{blocktemplateIII}
+
+\subsubsection{Pushing a local image to a public or private container registry}
+Pushing a local image to a public or private container registry involves a few key steps, whether you're working with Docker or any containerized platform like Kubernetes. I'll walk you through the general process, assuming you're using Docker, but this can be easily adapted for other container engines.
+
+\begin{enumerate}
+    \item \textbf{Build the Docker Image Locally (if not already built)}:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ docker build -t <image_name>:<image_tag>
+\end{verbatim}
+\end{codetemplate}
+
+    \item \textbf{Tag the image for the Registry:}  You need to tag your image with the repository URL or registry path before pushing it. The format is:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ docker tag <local_image_name>:<image_tag> <registry-url>/<repository-name>/<image-name>:<tag>
+\end{verbatim}
+\end{codetemplate}
+
+    \item \textbf{Authenticate to the Registry}:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ docker login <registry_fqdn>:<registry_port>
+\end{verbatim}
+\end{codetemplate}
+
+    \item \textbf{Push the Image to the Registry:}:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ docker push <registry-url>/<repository-name>/<image-name>:<tag>
+\end{verbatim}
+\end{codetemplate}
+\end{enumerate}
+
+\subsection{ReplicaSet}
 \href{https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/}{Official K8s Doc}
 
 \subsubsection{What is replica and why we need a Replication-Controller?}
@@ -1612,7 +1856,7 @@ Nevertheless, we must still define a \textbf{.spec.template section}, because in
 There are multiple ways to do it, we are going to explain 3:
 
 \begin{enumerate}
-    \item Edit the ReplicaSet definition file (YAML) with the replicas desired and replace it using a kubectl command.
+    \item Edit the ReplicaSet definition file (YAML) with the replicas desired and apply its configuration using a kubectl command.
 \begin{codetemplate}{}
 \begin{verbatim}
 $ vim replicaSet.yaml
@@ -1620,7 +1864,7 @@ $ vim replicaSet.yaml
 \end{codetemplate}
 \begin{codetemplate}{}
 \begin{verbatim}
-$ kubectl replace -f replicaSet.yaml
+$ kubectl apply -f replicaSet.yaml
 \end{verbatim}
 \end{codetemplate}
 
@@ -1906,9 +2150,11 @@ Fullstack applications usually have different kinds of pods hosting different pa
 
 Pods all have an IP adress assigned to them, but these IPs, as we know, are not static, these Pods can go down anytime and new Pods are created all the time, so you cannot rely on these IP adresses for internal communication between the application.
 
-\textbf{ClusterIP Services} allow different applications or microservices of applications connect to each other inside the cluster, with no need to go outside. This service create a kind of interface to group all the Pods of a microservice for the other Pods to access this service. In our example, the front-end Service work as unique interface to connect with front-end, same with backend, and same with rediss. This enables us to easily and effectively deploy a microservice based application on K8s Cluster. \textbf{Every layer can now scale or move as required without impacting communication}.
+\textbf{ClusterIP Services} allow different applications or microservices of applications connect to each other inside the cluster, with no need to go outside. This service create a kind of interface to group all the Pods of a microservice for the other Pods to access this service. In our example, the front-end Service work as unique interface to connect with front-end, same with backend, and same with redis. This enables us to easily and effectively deploy a microservice based application on K8s Cluster. \textbf{Every layer can now scale or move as required without impacting communication}.
 
-But how do they connect each other? Each Service gets an IP and a name inside Cluster recognized by all Nodes. And this is the name (or IP) that should be used by other Pods to access the Service. It is only available for \textbf{ClusterIP Service} type.
+A ClusterIP service is the \textbf{default service type in Kubernetes}, and it exposes the service \textbf{only within the cluster}. It assigns a virtual IP (known as the ClusterIP) that is \textbf{accessible from within the cluster pods and other services}.
+
+The ClusterIP service is only accessible inside the cluster (i.e., from within the pods or other nodes that are part of the cluster network). The \textbf{worker node itself is not part of the Kubernetes pod network}, and its traffic is not routed from the worker nodes directly, only from within the pods or other Kubernetes-managed processes.
 
 \subsubsection{How to define a ClusterIP Service?}
 
@@ -1994,34 +2240,81 @@ spec:
 LoadBalancer Services only work with Supported Cloud Platforms, as Azure, AWS, Google Cloud...    
 \end{blocktemplateIII}
 
-\newpage
-\subsubsection{Lab 4 - Creating and manipulating Services}
-\textbf{Question 2} ------------------------------------------------------------------------------------------
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{pictures/q41.png}
-\end{figure}
-\textbf{Question 4} ------------------------------------------------------------------------------------------
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{pictures/q42.png}
-\end{figure}
+\subsubsection{K8s DNS: How to reach the services from other Pods?}
+To reach a ClusterIP service from other pods within the same Kubernetes cluster, you can use the service's DNS name or its ClusterIP address. The Kubernetes service discovery and networking setup make it easy for pods to communicate with each other using these methods.
 
-\begin{blocktemplateIII}{WARNING}
-No dejarse engañar por la salida del \verb+kc describe svc | grep -i string+ pues que hay en la siguiente linea? 
-
-Mejor usar:
+Kubernetes automatically sets up DNS for services within the cluster. Each service gets a DNS name based on its name and the namespace it is running in. DNS Name Format: 
 \begin{codetemplate}{}
 \begin{verbatim}
-$ kubectl describe <resource> <name> | grep -i string -A 5
+<service-name>.<namespace>.svc.cluster.local
 \end{verbatim}
 \end{codetemplate}
+
+Kubernetes will automatically resolve this DNS name to the ClusterIP and route the traffic to the service, which in turn forwards it to the appropriate pod.
+
+\begin{blocktemplateII}{NOTE}
+If the pod accessing the service is in the same namespace, you can use the \verb|service_name| directly:
 \begin{codetemplate}{}
 \begin{verbatim}
-$ kubectl get <resource> <name> -o jsonpath='{...}
+$ curl <service_name>:<service_port>
 \end{verbatim}
 \end{codetemplate}
-\end{blocktemplateIII}
+\end{blocktemplateII}
+
+You can also reach the service by directly using its ClusterIP. However, this requires knowing the IP address assigned to the service and it is not a best practice. It's better to rely on DNS instead of the IP address, as the IP can change if the service is deleted and recreated, whereas the DNS name is stable.
+\begin{codetemplate}{}
+\begin{verbatim}
+$ curl <service_clusterIP>:<service_port>
+\end{verbatim}
+\end{codetemplate}
+
+\subsubsection{CurlPod: How to reach the services from the Nodes?}
+If the Service is \textbf{NodePort} type, you will be able to reach it directly by:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ curl localhost:<service_port>
+\end{verbatim}
+\end{codetemplate}
+
+But, if the Service is of another type, they will be only accessible inside the cluster (i.e., from within the pods or other nodes that are part of the cluster network). The \textbf{worker node itself is not part of the Kubernetes pod network}, and its traffic is not routed from the worker nodes directly, only from within the pods or other Kubernetes-managed processes.
+
+The best approach then will be to run a \textbf{Pod} inside the namespace of the \textbf{Service} and use the curl tool:
+
+\begin{codetemplate}{}
+\begin{verbatim}
+$ kubectl run curlpod --image=alpine/curl -it --rm --restart=Never \
+    --command -- curl http://<service_name>:<service_port>
+\end{verbatim}
+\end{codetemplate}
+
+\subsubsection{Port Forward: How to reach the services from outside the cluster}
+\paragraph{Introduction}
+Port-forwarding in Kubernetes (K8s) is a mechanism that allows you to access a specific resource (like a service or a pod) inside a Kubernetes cluster from your local machine. Typically, resources inside the cluster are isolated, and they can't be directly accessed from outside the cluster. However, by using port-forwarding, you can temporarily expose a local port to connect to a port of a service or a pod inside the cluster, which is especially useful for debugging, testing, or accessing internal applications.
+
+Port-forwarding works by forwarding traffic from a local port on your machine to a port on a resource (like a service or pod) inside the Kubernetes cluster. This allows you to communicate with applications running inside the cluster without needing to expose them externally.
+
+\paragraph{Use Cases}
+\begin{itemize}
+    \item \textbf{Access} internal services (e.g., databases or web services) without exposing them externally.
+    \item \textbf{Debug} and \textbf{test} applications by directly accessing their endpoints.
+    \item For local development, interact with in-cluster resources as if they were running locally.
+\end{itemize}
+
+\paragraph{kubectl port-forward}
+Services in Kubernetes manage access to a group of pods. By port-forwarding to a service, you can reach any pod behind the service (whichever the service forwards traffic to). Here's how to port-forward a service to your local machine.
+
+\begin{codetemplate}{}
+\begin{verbatim}
+$ kubectl port-forward service <service_name> <local_port>:<service_port>
+\end{verbatim}
+\end{codetemplate}
+
+Sometimes, you may want to port-forward directly to a specific pod. This can be useful if you want to directly access an individual pod (not through a service), or if you're testing or debugging a particular instance of your application.
+\begin{codetemplate}{}
+\begin{verbatim}
+$ kubectl port-forward pod <pod_name> <local_port>:<image_port>
+\end{verbatim}
+\end{codetemplate}
 
 %=====================================================
 \newpage
@@ -2261,7 +2554,7 @@ Imagine you have created a K8s Objetc:
 
 \begin{codetemplate}{}
 \begin{verbatim}
-$ kubectl create -f deployment-template.yaml
+$ kubectl create -f deployment_template.yaml
 \end{verbatim}
 \end{codetemplate}
 
@@ -2277,16 +2570,61 @@ When this command is run, an interactive terminal is open with a YAML definition
 
 This is not a good way to work for production environments, so if in the future, a teammate decides to make a change to this object unaware that a change was made using the \verb|kubectl edit| command an deploys a new version the previous change is lost. So it is hardly recommended to use \verb|kubectl edit| only for tests or changes that you are not going to rely on the object configuration file in the future.
 
-\begin{blocktemplateII}{NOTE}
-There is a way to record changes in both file and object in an imperative way:
+The best way to do it is always declarative:
 \begin{codetemplate}{}
 \begin{verbatim}
-$ kubectl replace -f deployment-template.yaml
+$ kubectl get deploy <deployment_name> -o yaml > deployment_template.yaml
+\end{verbatim}
+\end{codetemplate}
+\begin{codetemplate}{}
+\begin{verbatim}
+$ vim deployment_template.yaml
+\end{verbatim}
+\end{codetemplate}
+\begin{codetemplate}{}
+\begin{verbatim}
+$ kubectl apply -f deployment_template.yaml
 \end{verbatim}
 \end{codetemplate}
 
-It is imperative because you say directly to K8s to replace the object. If the replace command finds that the object you want to replace does not exist it fails. Like if you run the \verb|kubectl create| command and the object already exists, it will fail.
+\begin{blocktemplateII}{NOTE}
+There is a way to record changes in both file and object in an imperative way, because you say directly to K8s to replace the object:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ kubectl replace -f deployment_template.yaml
+\end{verbatim}
+\end{codetemplate}
+If the replace command finds that the object you want to replace does not exist it fails. Like if you run the \verb|kubectl create| command and the object already exists, it will fail.
 \end{blocktemplateII}
+
+\begin{blocktemplateIII}{WARNING}
+You need to pay attention on \verb|kubectl edit| command, because it is very easy to fail, as there are a lot of fields which are \textbf{unmutable}. In case of failure we hardly recommend:
+\begin{itemize}
+    \item Follow the procedure of:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ kubectl get deploy <deployment_name> -o yaml > deployment_template.yaml
+\end{verbatim}
+\end{codetemplate}
+\begin{codetemplate}{}
+\begin{verbatim}
+$ vim deployment_template.yaml
+\end{verbatim}
+\end{codetemplate}
+\begin{codetemplate}{}
+\begin{verbatim}
+$ kubectl apply -f deployment_template.yaml
+\end{verbatim}
+\end{codetemplate}
+
+    \item If the error persists, then replace the hardway:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ kubectl replace -f deployment_template.yaml --force
+\end{verbatim}
+\end{codetemplate}
+\end{itemize}
+\end{blocktemplateIII}
 
 \subsubsection{Working Declarative}
 
@@ -2428,7 +2766,7 @@ Also you can delete and create a new Pod with the same name. If the Pod is not a
 \end{blocktemplate}
 
 \begin{blocktemplateIII}{NOTE:}
-With the command \verb|kubectl replace -f| you can replace an object created by injecting them the specified in a YAML or JSON file, and then K8s will apply the changes.
+With the command \verb|kubectl replace -f| you can replace an object created by injecting them the specified in a YAML or JSON file, and then K8s will apply the changes. But it is a best practice to at first get the object, edit it and try to apply it.
 
 In case of Node, we said that is not possible to modify them, but if you use the option \verb|--force| the object will be automatically deleted and recreated with the specified changes, it does not matter what they were.
 \begin{figure}[H]
@@ -3222,8 +3560,7 @@ spec:
     	version: v1
     	kubernetes.io/cluster-service: "true"
 	spec:
-  	serviceAccount: fluentd
-  	serviceAccountName: fluentd
+  	serviceAccount: fluentd # serviceAccountName accepted as well
   	tolerations:
   	- key: node-role.kubernetes.io/master
     	effect: NoSchedule
@@ -3247,10 +3584,10 @@ spec:
         	memory: 200Mi
     	volumeMounts:
     	- name: varlog
-      	mountPath: /var/log
+      	  mountPath: /var/log
     	- name: varlibdockercontainers
-      	mountPath: /var/lib/docker/containers
-      	readOnly: true
+      	  mountPath: /var/lib/docker/containers
+      	  readOnly: true
   	terminationGracePeriodSeconds: 30
   	volumes:
   	- name: varlog
@@ -3274,12 +3611,12 @@ So the kubelet is alone on the sea, it is able to create pods by its own in a ve
 
 If the connection to the rest of the K8s come back, the kubelet will create a mirror of all the \textbf{Static Pods} on the kube-apiserver, so if you do \verb|kubectl get po|: you will see as well the \textbf{Static Pods}. But you won't be able to edit or delete them using \verb|kubectl|, you must modify or delete them directly from the static file inside kubelet configuration.
 
-\textbf{Kubeadmin} tool makes use of \textbf{Static Pods} to deploy the control-plane components as Pods on a Node. It starts by installing \textbf{kubelet} on all the master Nodes, then create \textbf{Static Pod} definition files for the various control-plane components, such as: kube-apiserver, kube-controller, etcd, etc.
-Then, it places the definition files inside the designated manifest folder and the the kubelets authomatically takes care of deploying
+\verb|kubeadm| tool makes use of \textbf{Static Pods} to deploy the control-plane components as Pods on a Node. It starts by installing \textbf{kubelet} on all the master Nodes, then create \textbf{Static Pod} definition files for the various control-plane components, such as: kube-apiserver, kube-controller, etcd, etc.
+Then, it places the definition files inside the designated manifest folder and the the kubelets automaticically takes care of deploying
 them as \textbf{Static Pods} on the Cluster. This way it avoids to download binaries, configure and run services or worry about the services crashing,
 because it will be restarted by the kubelet.
 
-The most common place to store the manifest of these static pods and the one used by \textbf{kubeadmin} is: \verb|/etc/kubernetes/manifests|. But it could be any directory on the Node, you just need to configure it properly on the \verb|kubelet/config.yaml|, which use to be on: \verb|/var/lib/kubelet/config.yaml|
+The most common place to store the manifest of these static pods and the one used by \verb|kubeadm| is: \verb|/etc/kubernetes/manifests|. But it could be any directory on the Node, you just need to configure it properly on the \verb|kubelet/config.yaml|, which use to be on: \verb|/var/lib/kubelet/config.yaml|
 
 \begin{blocktemplate}{NOTE}
 If you are not sure of where is this path, you can do:
@@ -3371,7 +3708,7 @@ spec:
     - command:
       - kube-scheduler
       - --adress=127.0.0.1
-      - --kubeconfig=/ect/kubernetes/scheduler.conf
+      - --kubeconfig=/etc/kubernetes/scheduler.conf
       - --config=/path/to/my-scheduler.yaml
       image: k8s.grc.io/kube-scheduler-amd64:v1.11
       name: kube-scheduler
@@ -3594,7 +3931,7 @@ Furthermore, you can implement cluster-level logging by including a node-level l
 
 As the logging agent must run on every node, it's common to implement it as either a DaemonSet replica, a manifest pod, or a dedicated native process on the node.
 
-\subsubsection{ELK Solution}
+\subsubsection{EFK Solution}
 
 Now that we covered the basics of logging, let's explore EFK solution (ElasticSearch, Fluentd and Kibana). This solution is used by many important companies like: GitHub, Netflix, and Amazon, ITnow XD. It connect Fluentd, ES, and Kibana (as visualization tools) to make an exact namespace with a few services and pods.
 
@@ -3695,6 +4032,25 @@ metadata:
 \end{codetemplate}
 \begin{codetemplate}{}
 \begin{verbatim}
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRole
+metadata:
+  name: fluentd
+  namespace: kube-system
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  - namespaces
+  verbs:
+  - get
+  - list
+  - watch
+\end{verbatim}
+\end{codetemplate}
+\begin{codetemplate}{}
+\begin{verbatim}
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1beta1
 metadata:
@@ -3757,10 +4113,10 @@ spec:
         	memory: 200Mi
     	volumeMounts:
     	- name: varlog
-      	mountPath: /var/log
+      	  mountPath: /var/log
     	- name: varlibdockercontainers
-      	mountPath: /var/lib/docker/containers
-      	readOnly: true
+      	  mountPath: /var/lib/docker/containers
+      	  readOnly: true
   	terminationGracePeriodSeconds: 30
   	volumes:
   	- name: varlog
@@ -4063,6 +4419,21 @@ spec:
       - name: APP_COLOR
         valueFrom:
             configMapKeyRef:
+                name: <cm_name>     # The ConfigMap this value comes from.
+                key: <key>          # The key to fetch.
+\end{verbatim}
+\end{codetemplate}
+
+\begin{codetemplate}{}
+\begin{verbatim}
+apiVersion: v1
+kind: Pod
+spec:
+    containers:
+    - image: ...
+      envFrom:
+      - configMapRef:
+            name: <cm_name>     # The ConfigMap this value comes from.
 \end{verbatim}
 \end{codetemplate}
 
@@ -4148,21 +4519,6 @@ $ kubectl create -f cm.yaml
 It is common to have so many ConfigMaps for different Pods (fron-end, backend, Database, etc.) for different purposes and configurations, so it is important to name them properly as you will be using these names later while associating it with Pods.
 \end{blocktemplateI}
 
-\textbf{Common }
-
-\begin{codetemplate}{}
-\begin{verbatim}
-apiVersion: v1
-kind: Pod
-spec:
-    containers:
-    - image: ...
-      envFrom:
-      - configMapRef:
-            name: <configmap-name>  
-\end{verbatim}
-\end{codetemplate}
-
 \textbf{As Single Env Var}
 \begin{codetemplate}{}
 \begin{verbatim}
@@ -4173,9 +4529,24 @@ spec:
     - image: ...
       env:
       - name: APP_COLOR
-        configMapKeyRef:
-            name: <configmap-name>
-            key: APP_COLOR
+        valueFrom:
+          configMapKeyRef:
+            name: <cm_name>     # The ConfigMap this value comes from.
+            key: <key>          # The key to fetch.
+\end{verbatim}
+\end{codetemplate}
+
+\textbf{All variables from ConfigMap}
+\begin{codetemplate}{}
+\begin{verbatim}
+apiVersion: v1
+kind: Pod
+spec:
+    containers:
+    - image: ...
+      envFrom:
+      - configMapRef:
+            name: <cm_name>     # The ConfigMap this value comes from.
 \end{verbatim}
 \end{codetemplate}
 
@@ -4185,32 +4556,78 @@ spec:
 apiVersion: v1
 kind: Pod
 spec:
+    containers:
+    - name: <container_name>
+      image: ...
+      volumeMounts:
+      - mountPath: <mount_path>
+        name: app-config-volume
     volumes:
     - name: app-config-volume
       configMap:
-        name: <configmap-name>
+        name: <cm_name>     # The ConfigMap this value comes from.
 \end{verbatim}
 \end{codetemplate}
 
-\subsubsection{Lab - Playing with env vars and CM}
+\begin{blocktemplateII}{NOTE}
+If you don't configure the ConfigMap as volume, and you just add it to the \verb|env| list, the variable is directly set as variable on the container accessible from shell.
+\end{blocktemplateII}
 
-\begin{blocktemplateIII}{WARNING}
-If you modify the ConfigMap but you do not recreate the Pod, changes will no be applied.
-\end{blocktemplateIII}
+\subsubsection{Pods update when ConfigMaps changes?}
+In Kubernetes, Pods don’t automatically restart when the ConfigMap they use is updated. This is because the ConfigMap is mounted as a volume or injected as environment variables, and changes to the ConfigMap itself don't trigger an update event for Pods.
+
+If you want automatic updates of Pods when a ConfigMap changes without a rolling update, you can use the k8s-sidecar container to monitor ConfigMaps and trigger the reload of the application within the Pod.
+
+You would add a sidecar container that watches for changes in the ConfigMap and reloads the application or updates the configuration in real-time.
+
+Here, stakater/reloader or another reloader container can monitor the changes and reload the app inside the pod.
+
+\begin{codetemplate}{}
+\begin{verbatim}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  ...
+spec:
+  ...
+  template:
+   ...
+    spec:
+      containers:
+      - name: my-app
+        image: my-app-image
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/config
+        env:
+        - name: CONFIG_PATH
+          value: "/etc/config/my-config"
+      - name: configmap-reloader
+        image: stakater/reloader:latest
+        env:
+        - name: WATCH_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: CONFIGMAP_NAME
+          value: "my-configmap"
+        - name: RESOURCE_TYPE
+          value: "deployment"
+      volumes:
+      - name: config-volume
+        configMap:
+          name: my-configmap
+\end{verbatim}
+\end{codetemplate}
 
 \subsection{Secrets}
-Store confidential data into ConfigMaps is not a good idea, like passwords or keys, because the value of this objects are clear. There is another type of object similar to ConfigMpas but with data encoded, it is called \textbf{Secret}. As in ConfigMaps there are two steps involved in the creation of a Secret:
-\begin{enumerate}
-    \item Secret Creation
-    \item Secret Pod Injection
-\end{enumerate}
-
+Store confidential data into ConfigMaps is not a good idea, like passwords or keys, because the value of this objects are clear. There is another type of object similar to ConfigMpas but with data encoded, it is called \textbf{Secret}. As in ConfigMaps there are two steps involved in the creation of a Secret: creation and pod injection.
 \subsubsection{Secret Creation}
 
 \textbf{Imperative}
 \begin{codetemplate}{}
 \begin{verbatim}
-$ kubectl create secret generic <secret-name> --from-literal=<key>=<value> \\
+$ kubectl create secret generic <secret-name> --from-literal=<key>=<value> \
     --from-literal=<key>-<value>
 \end{verbatim}
 \end{codetemplate}
@@ -4236,6 +4653,19 @@ data:
 \end{verbatim}
 \end{codetemplate}
 
+\begin{codetemplate}{secret.yaml}
+\begin{verbatim}
+apiVersion: v1
+kind: Secret
+metadata:
+  name: secret-ssh-auth
+type: kubernetes.io/ssh-auth
+data:
+  ssh-privatekey: |
+    UG91cmluZzYlRW1vdGljb24lU2N1YmE=    
+\end{verbatim}
+\end{codetemplate}
+
 \begin{blocktemplateIII}{WARNING}
 Note that the values are encoded (in base64), it is important than when you create Secrets in declarative way, so you should previously encode the values in base64:
 \begin{codetemplate}{}
@@ -4246,27 +4676,39 @@ $ echo -n 'mysql' | base64
 \end{blocktemplateIII}
 
 \subsubsection{Secrets Pod Injection}
-\textbf{Common Way}
+\textbf{As a .file inside Container}
+\begin{codetemplate}{}
+\begin{verbatim}
+apiVersion: v1
+kind: Secret
+metadata:
+  name: dotfile-secret
+data:
+  .secret-file: dmFsdWUtMg0KDQo=
+\end{verbatim}
+\end{codetemplate}
 \begin{codetemplate}{}
 \begin{verbatim}
 apiVersion: v1
 kind: Pod
 metadata:
-    name: secret-pod
-    labels:
-        name: secret-pod
+  name: secret-dotfiles-pod
 spec:
-    containers:
-    - name: simple-webapp-color
-      image: simple-webapp-color
-      ports:
-      - containerPort:8080
-      envFrom:
-      - secretRef:
-            name: app-secret
-      - secretRef:
-            name: app-secret2
-      ...
+  volumes:
+    - name: secret-volume
+      secret:
+        secretName: dotfile-secret
+  containers:
+    - name: dotfile-test-container
+      image: registry.k8s.io/busybox
+      command:
+        - ls
+        - "-l"
+        - "/etc/secret-volume"
+      volumeMounts:
+        - name: secret-volume
+          readOnly: true
+          mountPath: "/etc/secret-volume"
 \end{verbatim}
 \end{codetemplate}
 
@@ -4274,6 +4716,16 @@ spec:
 \begin{codetemplate}{}
 \begin{verbatim}
 apiVersion: v1
+kind: Secret
+metadata:
+  name: app-secret
+data:
+  DB_Password: bXlzcWw=
+\end{verbatim}
+\end{codetemplate}
+\begin{codetemplate}{}
+\begin{verbatim}
+apiVersion: v1
 kind: Pod
 metadata:
     name: secret-pod
@@ -4283,8 +4735,6 @@ spec:
     containers:
     - name: simple-webapp-color
       image: simple-webapp-color
-      ports:
-      - containerPort:8080
       env:
       - name: DB_Pawd
         valueFrom:
@@ -4295,7 +4745,19 @@ spec:
 \end{verbatim}
 \end{codetemplate}
 
-\textbf{As Files into Volumes}
+\textbf{All env vars from Secret}
+\begin{codetemplate}{}
+\begin{verbatim}
+apiVersion: v1
+kind: Secret
+metadata:
+  name: app-secret
+data:
+  DB_User: root
+  DB_Password: bXlzcWw=
+  DB_connection_string: mysql.connection.string 
+\end{verbatim}
+\end{codetemplate}
 \begin{codetemplate}{}
 \begin{verbatim}
 apiVersion: v1
@@ -4306,7 +4768,20 @@ metadata:
         name: secret-pod
 spec:
     containers:
+    - name: simple-webapp-color
+      image: simple-webapp-color
+      envFrom:                                                                                                                                            
+      - secretRef:                                                                                                                                        
+          name: db-secret
     ...
+    ...
+        volumeMount:
+    ...
+    volumes:
+    - name: app-secret-volume
+      secret:
+        secretName: app-secret
+      ...
         volumeMount:
     ...
     volumes:
@@ -4315,7 +4790,6 @@ spec:
         secretName: app-secret
 \end{verbatim}
 \end{codetemplate}
-
 
 \subsubsection{View Secrets}
 \begin{codetemplate}{}
@@ -4348,6 +4822,8 @@ $ echo -n 'bXlzcWw=' | base64 -d
     \end{itemize}
 \end{itemize}
 
+There are different type of secrets, for more information check the \href{https://kubernetes.io/docs/concepts/configuration/secret/}{Official Doc}
+
 \subsection{Multi Container Pods}
 The idea of decoupling a large monolithic application into sub-components known as \textbf{microservices} enables us to develop and deploy a set of independent, small and reusable code. This architecture helps us to scale every service as required, as opposed to modifying the entire application.. 
 
@@ -4371,6 +4847,20 @@ spec:
       image: log-agent
     - name: istio-proxy
       image: istio-envoy
+\end{verbatim}
+\end{codetemplate}
+
+You can retrieve logs for a specific container:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ kubectl logs <pod_name> -c <container_name>
+\end{verbatim}
+\end{codetemplate}
+
+You can access via shell the specific container:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ kubectl exec -it <pod_name> -c <container_name> -- <command_to_exec>
 \end{verbatim}
 \end{codetemplate}
 
@@ -4404,6 +4894,23 @@ When a POD is first created the initContainer is run, and the process in the ini
 
 You can configure multiple such initContainers as well, like how we did for multi-containers pod. In that case each init container is run one at a time in sequential order. If any of the initContainers fail to complete, Kubernetes restarts the Pod repeatedly until the Init Container succeeds.
 
+You can retrieve logs for a specific container:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ kubectl logs <pod_name> -c <container_name>
+\end{verbatim}
+\end{codetemplate}
+
+\begin{blocktemplateII}{NOTE}
+As well, you can access via shell the specific container,
+but you should do it when the initcontainer is still running (to debug you can add as command some sleep):
+\begin{codetemplate}{}
+\begin{verbatim}
+$ kubectl exec -it <pod_name> -c <container_name> -- <command_to_exec>
+\end{verbatim}
+\end{codetemplate}
+\end{blocktemplateII}
+
 \subsection{Self Healing Applications}
 
 Kubernetes supports self-healing applications through ReplicaSets and Replication Controllers. The replication controller helps in ensuring that a POD is re-created automatically when the application within the POD crashes. It helps in ensuring enough replicas of the application are running at all times.
@@ -4428,46 +4935,48 @@ If the Node comes back after pod-eviction-timeout it comes up blank, without any
 
 As you can imagine, if you know that a Node will be unavailable for some time, there is a safer way to do it without danger, purposelly drain the node of all the Workloads running on it:
 
-\begin{codetemplate}{}
-\begin{verbatim}
-$ kubectl drain <node-name>
-\end{verbatim}
-\end{codetemplate}
-
-With this command, all the Pods running on the specified Node are moved to another Nodes in the Cluster. This menas that Pods are terminated from the Node they were running and recreated into another Node. Also, the Pod is marked as unschedulable, so any Pod can be scheduled on this Node until you specifically remove the restriction.
-
-\begin{codetemplate}{}
-\begin{verbatim}
-$ kubectl uncordon <node-name>
-\end{verbatim}
-\end{codetemplate}
-
-Also you can use the command \verb|kubectl cordon| to do the inverse process, to mark a Node as unschedulable, but unline \verb|kubectl drain| it does not move the Pods to another existing node.
-
+At first, we should tell K8s to not schedule more Pods on the Node, because we are going to take actions on it:
 \begin{codetemplate}{}
 \begin{verbatim}
 $ kubectl cordon <node-name>
 \end{verbatim}
 \end{codetemplate}
 
-\subsubsection{Lab Upgrades}
-
-\textbf{How to se where Pods are running?}
-Not describing deployments! It is needed to describe pods:
+Then, we should move all the Pods running on the node into another Nodes in the Cluster. This means that Pods are terminated from the node they were running and recreated into another Node.
 \begin{codetemplate}{}
 \begin{verbatim}
-$ kubectl describe po/<pod-name> | grep -i node
+$ kubectl drain <node-name>
+\end{verbatim}
+\end{codetemplate}
+
+When we have finished with the maintaince actions, we should make the Node schedulable again:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ kubectl uncordon <node-name>
 \end{verbatim}
 \end{codetemplate}
 
 \begin{blocktemplateIII}{WARNING}
 A Node cannot be drained if there are Pods running without a ReplicaSet or ReplicationController. It is logic, because without these objects the Pod will be lost forever.
+\\\\
+But we can force it:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ kubectl drain --force <node_name>
+\end{verbatim}
+\end{codetemplate}
+As well, nodes running \textbf{daemonSets} cannot be normally drained, so you can use force as well to remove the pods or \verb|--ignore-daemonsets| to do not drain them:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ kubectl drain --ignore-daemonsets <node_name>
+\end{verbatim}
+\end{codetemplate}
 \end{blocktemplateIII}
 
 \subsection{Cluster Upgrade Process}
 
 \subsubsection{K8s Releases}
-When we install a K8s Cluster, we install a specific version of K8s, we can see that running:
+When we install a K8s Cluster, we install a specific version of K8s, we can see the version running on the nodes:
 
 \begin{codetemplate}{}
 \begin{verbatim}
@@ -4481,7 +4990,9 @@ You can check K8s versions: \href{https://github.com/kubernetes/kubernetes}{http
 
 \subsubsection{Cluster Upgrade Process}
 
-The different components can be at different release versons, since the kube-apiserver is the primary component in the control plane, and this is the components that all other components talk to, \textbf{nonoe of the other components can be at a version higher than the kube-apiserver}. The \textbf{controller-manager} and \textbf{scheduler} can be at most one version lower. And \textbf{kubelet} and \textbf{kubeproxy} can be at most 2 versions lower. The kubectl version could be at most 1 superior or 1 lower.
+The different components can be at different release versons, 
+since the kube-apiserver is the primary component in the control plane, 
+and this is the components that all other components talk to, \textbf{none of the other components can be at a version higher than the kube-apiserver}. The \textbf{controller-manager} and \textbf{scheduler} can be at most one version lower. And \textbf{kubelet} and \textbf{kubeproxy} can be at most 2 versions lower. The kubectl version could be at most 1 superior or 1 lower.
 
 \begin{figure}[H]
     \includegraphics[scale=0.5]{pictures/clusup.png}
@@ -4494,7 +5005,7 @@ The images supported by K8s are always the last three MINOR version release. But
     \includegraphics[scale=0.13]{pictures/clusup1.png}
 \end{figure}
 
-\paragraph{Kubeadmind Upgrade Plan}
+\paragraph{kubeadm Upgrade Plan}
 
 Imagine we have a cluster with Master and Worker Nodes, with applications running in production, hosting Pods, serving users. At first they are upgraded the Master Nodes version and then the Worker Nodes versions. When Master Nodes goes down does not mean your Worker Nodes and applications on the Cluster are impacted. All workloads hosted on the Worker Nodes continue to serve users as normal, but all the management functions are down, so you cannot access the cluster using kubectl or other K8s API, so you cannot deploy new applications or modify existing ones.  But deployments and ReplicaSets are already running, so if a Pod fails, it is automatically deployed.
 
@@ -4514,7 +5025,21 @@ With this command you can see the version of all components in the K8s Cluster. 
 
 \begin{enumerate}
 
-    \item Upgrade the kubeadmin version to version 1.12
+    \item Update the system to have the latest versions of the binaries and services:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ sudo apt-get update
+\end{verbatim}
+\end{codetemplate}
+
+    \item Check the \verb|kubeadm| version you want is available for your system:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ sudo apt-cache madison kubeadm
+\end{verbatim}
+\end{codetemplate}
+
+    \item Upgrade the \verb|kubeadm| version to version 1.12
 \begin{codetemplate}{}
 \begin{verbatim}
 $ sudo apt-get upgrade -y kubeadm=1.12.0-00
@@ -4522,6 +5047,11 @@ $ sudo apt-get upgrade -y kubeadm=1.12.0-00
 \end{codetemplate}
 
     \item Upgrade the Cluster
+\begin{codetemplate}{}
+\begin{verbatim}
+$ kubeadm upgrade plan
+\end{verbatim}
+\end{codetemplate}
 \begin{codetemplate}{}
 \begin{verbatim}
 $ kubeadm upgrade apply v1.12.0 -y
@@ -4535,7 +5065,21 @@ $ kubectl get nodes
 \end{verbatim}
 \end{codetemplate}
 
-    \item Go to the Master Nodes and upgrade kubelet version (if is has kubelet)
+    \item Go to the Master Nodes and update the system:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ sudo apt-get update
+\end{verbatim}
+\end{codetemplate}
+
+    \item Check on the master Node that the version you want to install is available:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ sudo apt-cache madison kubelet
+\end{verbatim}
+\end{codetemplate}
+
+    \item Upgrade kubelet version:
 \begin{codetemplate}{}
 \begin{verbatim}
 $ sudo apt-get upgrade -y kubelet=1.12.0-00
@@ -4547,14 +5091,21 @@ $ systemctl restart kubelet
 \end{verbatim}
 \end{codetemplate}
 
-    \item Move Pods workload of the first Worker Node to another Nodes
+    \item Cordon the first Worker Node we want to upgrade:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ kubectl cordon node-1
+\end{verbatim}
+\end{codetemplate}
+
+    \item Drain Pods from this Worker Node:
 \begin{codetemplate}{}
 \begin{verbatim}
 $ kubectl drain node-1
 \end{verbatim}
 \end{codetemplate}
 
-    \item Go to the Worker Node and upgrade the kubeadmin version
+    \item Go to the Worker Node and upgrade the \verb|kubeadm| version
 \begin{codetemplate}{}
 \begin{verbatim}
 $ sudo apt-get upgrade -y kubeadm=1.12.0-00
@@ -4622,9 +5173,1696 @@ $ kubectl get po -o wide
 \end{codetemplate}
 \end{blocktemplateI}
 
+\subsection{Backup and Restore Methods}
+\subsubsection{Resources}
+In resources, the best way to ensure backups is based on 2 concepts:
+\begin{itemize}
+    \item Use always \verb|kubectl apply| instead of \verb|kubectl create| or \verb|kubectl run|. If you need the template, you can always do:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ kubectl create deploy my-deployment --image=nginx --replicas=3 \
+    --dry-run="client" -o yaml > deployment.yaml
+\end{verbatim}
+\end{codetemplate}
+\begin{codetemplate}{}
+\begin{verbatim}
+$ kubectl apply -f deployment.yaml
+\end{verbatim}
+\end{codetemplate}
+
+    \item Always store the resources files into a git repository, mantaining them always updated. And enabling you to recover backups if needed.
+\end{itemize}
+
+With this configuration, even if you lose your entire cluster, you will be able to recover the applications using the templates (YAML), however you will lose all your data.
+
+You can retrieve logs for a specific container:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ kubectl logs <pod_name> -c <container_name>
+\end{verbatim}
+\end{codetemplate}
+
+\begin{blocktemplateII}{NOTE}
+If Pods has been created in imperative way, the best approach is then:
+\begin{itemize}
+    \item Recover all the resources created on the cluster:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ kubectl get all -A -o yaml > all_resources.yaml
+\end{verbatim}
+\end{codetemplate}
+
+    \item Store it into a git repo.
+\end{itemize}
+\end{blocktemplateII}
+
+\subsubsection{ETCD}
+\textbf{Etcd} which is running on all Master Nodes enables the option of take and recover snapshots. For more information check \href{https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/}{The Official Documentation}
+
 %==========================================================
 \newpage
 \section{Security}
+
+Security in K8s cluster is related to how access to the K8s Cluster is managed (authentication) and how are the actions controlled inside it.
+
+
+\subsection{Security in K8s Introduction}
+The first security that we should take into account inside a K8s Cluster is the security of the Nodes itself. The bast practices say:
+\begin{itemize}
+    \item Route access disabled
+    \item PasswordAuthentication disabled
+    \item Just SSH key authentication enabled
+\end{itemize}
+
+But, our focus on this section is more on the K8s related security. As we have seen \textbf{kube-apiserver} is at the center
+of all operations within K8s, we interact with it using \verb|kubectl| or by accessing the API directly. With that, you can almost perform any operation inside the cluster. So this should be the first line of defense, controlling the access to \textbf{kube-apiserver} itself.
+
+Who can access? K8s has different methods of authentication:
+\begin{itemize}
+    \item Username and passwords stored in static files.
+    \item Username and tokens stored in static files.
+    \item Certificates.
+    \item External Authentication providers like LDAP.
+    \item Service Accounts (for machines and K8s resources).
+\end{itemize}
+
+What they can do? K8s has different methods of control that, but the most used is \textbf{RBAC Authorization (Role-Based Access Control)}, where users are associated to groups with specific permissions.
+
+All the communication inside the cluster can be secured using TLS encryption.
+
+However, by default, all pods can access al other pods within the cluster, but you can restric them using \textbf{network policies}
+
+\subsection{Authentication and Authorization, who can access the cluster?}
+
+To a K8s there are a lot of entities that want to access for different purposes:
+\begin{itemize}
+    \item \textbf{Administrators:} to administrate the cluster.
+    \item \textbf{DevOps:} to check all the objects they deploy are running properly.
+    \item \textbf{Developers:} to check the applications are running properly.
+    \item \textbf{End Users:} which are going to use the application. Actually it is not managed by the K8s cluster, it is managed by the application itself.
+    \item \textbf{External Tools:} which connects to the cluster to retrieve data or trigger actions.
+\end{itemize}
+
+K8s does not manage user accounts natively, it relies on an external source like a file with user details or certificates or a third party identity service like LDA to manage the authentication. So, you cannot directly create users into a K8s Cluster.
+
+The only thing related to Authentication and Authorization that K8s can manage is \textbf{ServiceAccounts}. All user Authentication and Authorization is managed by the API server (kube-apiserver). So, how does the \textbf{kube-apiserver} authenticates? There are different methods:
+
+\begin{itemize}
+    \item List of usernames and passwords on an static file.
+    \item List of usernames and tokens on an static file.
+    \item Certificates.
+    \item LDAP.
+\end{itemize}
+
+Let's start with \textbf{Static Files}.
+
+\subsubsection{Static File Authentication}
+A list of users and their passwords or tokens can be created in a CSV file and use it as the source for user information.
+The file should have 4 columns: password or token, username, userid, group.
+
+It should be configured on the \textbf{kube-apiserver} service or pod (depending how are you running your cluster) with:
+\begin{codetemplate}{}
+\begin{verbatim}
+--basic-auth-file=user-details.csv
+\end{verbatim}
+\end{codetemplate}
+
+Or if we want tokens:
+\begin{codetemplate}{}
+\begin{verbatim}
+--token-auth-file=user-details.csv
+\end{verbatim}
+\end{codetemplate}
+
+To authenticate using static files, you should:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ curl -vk https://<master-node-ip>:6443/api/v1/pods -u "user1:password123"
+\end{verbatim}
+\end{codetemplate}
+
+To authenticate using static files, you should:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ curl -vk https://<master-node-ip>:6443/api/v1/pods \
+    --header "Authorization: Bearer fafhflafhsash..."
+\end{verbatim}
+\end{codetemplate}
+
+\begin{blocktemplateIII}{WARNING}
+This is not the recommended authentication and authorization mechanism, as it is not much sercure.
+\end{blocktemplateIII}
+
+\subsection{TLS Introduction (not for K8s)}
+
+\subsubsection{Why do we need certificates?}
+Certificates are used to guarantee trust between 2 parties during a transaction. For example: when a user is trying to access a web server, TLS certificates ensure that the communication between the user and the server it is encrypted and they are both who they sey they are (there is no man in the middle).
+
+The data between communications are encrypted using asymetric keys, so only the receiver of the data can decrypt the data, even the sender cannot decrypt the message once it has been sent. A good example to understan asymetric encryption is to think like:
+\begin{itemize}
+    \item \textbf{Public Key:} Lock that anyone can try to open.
+    \item \textbf{Private Key:} The only key which can open the lock, never should be shared.
+\end{itemize}
+
+All the times you're requested for connection you are sharing your public key, 
+so it is really public XD. Here is the "key" XD: public and private key are related each other,
+the sender encrypts the message using his own private key and the public key of the server. And then the server is able to
+decrypt it using his private key, all thanks to the relation between pubkey and privkey. 
+
+So the man in the middle is dead, because he does not have any of the private keys and he does not know the relation between public keys and private keys. In summary, he cannot decrypt the message.
+
+So the only chance the man in the middle has, is to recreate the exact website and tell you: hey, I'm your bank, send me your credentials! So the website has its own public and private keys and it starts the negotiation with you. So if you answer, you are dead.
+
+But what if you could know in advance if the pubkey of the server is a legitimate key from your real bank server?
+So that's what certificates exactly do! When you are connecting through \textbf{https}, your bank account is sending you a \textbf{Certificate} instead of the pubkey.
+This certificate (among other things) has the pubkey inside. Inside the certificate there is information as:
+\begin{itemize}
+    \item CN (Common Name): domain it is certifying.
+    \item Identity: individual, organization, or device
+    \item Location: country, state, localty.
+    \item PubKey.
+    \item Signature.
+    \item Signature Algorithm.
+    \item Validity Period.
+\end{itemize}
+
+But, anyone can create its own certificate, so for that, the browsers check the certificates are signed by a \textbf{(CA) Certificate Authority} which recognizes that 
+the certificate is legitime and it is used to certify the domain it is saying. CA's can sign and validate the certificates, the most popular are: DigiCert, Symantec, Comodo, GlobalSign.
+
+How all of them works?
+
+\begin{enumerate}
+    \item You generate a \textbf{CSR:} Certificate Signing Request with your domain.
+\begin{codetemplate}{}
+\begin{verbatim}
+$ openssl req -new -key my-bank.key -out my-bank.csr \
+    -subj "C=US/ST=CA/O=MyOrg, Inc./CN=mydomain.com"
+\end{verbatim}
+\end{codetemplate}
+    \item The CSR should be sent to the \textbf{CA} for signing.
+    \item The CA verify your details and once it checks out, they sign the certificate and send it back to you.
+    \item You now have a certificate signed by a CA which the Browsers trust.
+\end{enumerate}
+
+\begin{blocktemplateI}{Note}
+How Browsers know that the CA which signed the certificate is trustable? Because CA's generate the certificate using it's own pair keys, so the public keys of all the legitimate CAs are built
+into all the browsers. Then the browsers use the public key of the CA to validate that the certificate
+is actually signed by a legitimate CA.
+\end{blocktemplateI}
+
+As well, you can use \textbf{certbot (let's encrypt)} (like a CA), but more quicklier and easier to do, take a look on \href{https://certbot.eff.org/}{CertBot Official Documentation}.
+
+Once your browser and you trust in the server, you can send your sensitive data which will be encrypted using the asymetric key encryption method, and only and actually just only the receiver can decrypt.
+
+\begin{blocktemplateI}{Note}
+In some cases, servers can also request a client certificate to authenticate the user or device connecting to them, verifying they are who they say they are. You can not send them, then the server will decide what to share or not share with you.
+\\\\
+However, your operating system or device (Windows, macOS, Linux, or even a smartphone) manages the whole process for you behind the scenes; your operating system comes with a built-in set of trusted root certificates from trusted certificate authorities (CAs) like DigiCert, Let's Encrypt, etc. These CAs issue certificates to servers (like the one hosting ChatGPT).
+\end{blocktemplateI}
+
+Certificates including public keys are stored always with this two extensions: 
+\begin{itemize}
+    \item \textbf{.pem}: server.pem
+    \item \textbf{.crt}: server.crt
+\end{itemize}
+
+The private key needed to decrypt messages are stored always with this extension \textbf{.key}: server.key
+
+\begin{blocktemplateI}{Note}
+As the key pairs are related, you can encrypt using both of them. So if you encrypt with one of them, you only can decrypt with the other.
+\\\\
+But take care, the common use is to encrypt with your public key and the public key of the receiver to just the receiver can decrypt using its private key. But if you encrypt using your privatekey, you message will be opened to the world because it can be decrypted with your pubkey.
+\end{blocktemplateI}
+
+All the infraestructure regarding this is called \textbf{PKI (Public Key Infraestructure)}, which contains:
+\begin{itemize}
+    \item Certificates
+    \item Certificate Signing Request
+    \item CA'S
+    \item PubKey and PrivKey
+    \item ...
+\end{itemize}
+
+So with all of this we have 3 types of certificates based on where they are:
+\begin{itemize}
+    \item \textbf{Server Certificates:} the ones configured on the servers side.
+    \item \textbf{Root Certificate:} configured on the CA servers.
+    \item \textbf{Client Certificates:} the ones configured on the clients side. 
+\end{itemize}
+
+So in order to know properly which one is server, client... I recommend to name them properly:
+\begin{itemize}
+    \item server.pem / server.crt / server.key 
+    \item client.pem / client.crt / client.key
+\end{itemize}
+\subsection{Introduction to TLS on K8s}
+A K8s Cluster consists of a set of Master and Worker nodes, of course with constant communication between them. So, all the communications inside a K8s Cluster must be secured, so should be encrypted.
+For example an administrator using \verb|kubectl| to interact with cluster must establish sceure TLS connection as well as communications between all the components within a K8s Cluster.
+
+To accomplish that, all the clients and servers in a K8s Cluster should have their client certificate and privkey and their server certificate and privkey, to ensure they are who they say they are.
+
+So let's identify the different servers and clients we have within a K8s Cluster.
+
+\textbf{Kube-apiserver} exposes an HTTPS service that other components as well as external users can connect to manage the K8s Cluster. So it is a \textbf{server}, so it must have its server certificate and privkey. But it is a client as well, because it 
+needs to communicate with etcd and kubelet, so it can use just the same pair of cert-key for server and client or it can use two pair cert-key; one for server an other for client:
+\begin{itemize}
+    \item apiserver.crt
+    \item apiserver.key
+\end{itemize}
+
+\textbf{Etcd} stores all information about the cluster, so it requires as well its certificate and privkey:
+\begin{itemize}
+    \item etcdserver.crt
+    \item etcdserver.key
+\end{itemize}
+
+\textbf{Kubelet} exposes and HTTPS API endpoint which the kube-apiserver talks to interact with the Worker Nodes, so:
+\begin{itemize}
+    \item kubelet.crt
+    \item kubelet.key
+\end{itemize}
+
+\textbf{Kube-scheduler} is a client of the kube-apiserver, telling which pods need to be deployed on which node, so:
+\begin{itemize}
+    \item scheduler.crt
+    \item shceduler.key
+\end{itemize}
+
+\textbf{User accessing kubectl} is a client, so we need as well our client certificate and privkey
+to authenticate to the kube-apiserver:
+\begin{itemize}
+    \item admin.crt
+    \item admin.key
+\end{itemize}
+
+As well \textbf{kube-controller-manager} and \textbf{kube-proxy} are kube-apiserver clients, so they need their certificates and privkeys:
+\begin{itemize}
+    \item controller-manager.crt
+    \item controller-manager.key
+    \item kube-proxy.crt
+    \item kube-proxy.key
+\end{itemize}
+
+K8s at least one CA (Certificate Authority) for your cluster, to sign all these certificates. In fact, you can have more than one. The CA's have their own pair or cert-key:
+\begin{itemize}
+    \item CA.crt
+    \item CA.key
+\end{itemize}
+
+\subsection{Certificate Creation for K8s}
+For generating certificates there are different tools available such as:
+\begin{itemize}
+    \item \verb|openssl|
+    \item \verb|easyrsa|
+    \item \verb|cfssl|
+    \item ...
+\end{itemize}
+
+We are going to use the \verb|openssl| tool to generate the certificates.
+
+\subsubsection{Generating CA Certificate}
+
+\begin{enumerate}
+    \item Create the \textbf{CA} private key:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ openssl genrsa -out ca.key 2048
+\end{verbatim}
+\end{codetemplate}
+
+    \item Request a CSR (Certificate Signing Request) for the \textbf{CA} along with the key we've just created:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ openssl req -new ca.key -subj "/CN=KUBERNETES-CA" -out ca.csr
+\end{verbatim}
+\end{codetemplate}
+\begin{blocktemplateI}{Note}
+A CSR (Certificate Signing Request) will be like a normal certificate, 
+with same information, but without the signature. When we create a CSR, 
+we should specify the CN, which will be the name of the component the certificate is for.
+\end{blocktemplateI}
+    \item Self-sign the certificate:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ openssl x509 -req -in ca.csr -signkey ca.key -out ca.crt
+\end{verbatim}
+\end{codetemplate}
+\begin{blocktemplate}{Note}
+As this certificate will be for the CA itself, it will be self-signed. For the rest of the generated
+certificates, they are going to be signed with the CA certificate-privkay pairs.
+\end{blocktemplate}
+\end{enumerate}
+
+\subsubsection{Generating Client Certificates}
+
+\paragraph{Admin User Certificate}
+
+\begin{enumerate}
+    \item Create the Admin User private key:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ openssl genrsa -out admin.key 2048
+\end{verbatim}
+\end{codetemplate}
+
+    \item Request a CSR for the Admin User along with the key we've just created:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ openssl req -new admin.key -subj "/CN=kube-admin/O=system:masters" \
+    -out admin.csr
+\end{verbatim}
+\end{codetemplate}
+\begin{blocktemplateI}{Note}
+The system:masters label into the CN is added to differentiate admin permissions from general permissions. To make it work, a group named system:masters should exist on K8s with administrative privileges.
+\end{blocktemplateI}
+
+    \item Sign the certificate with the CA certificate and CA privkey, to make the certificate valid within the Cluster:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ openssl x509 -req -in admin.csr -CA ca.crt -CAkey ca.key -out admin.crt
+\end{verbatim}
+\end{codetemplate}
+\end{enumerate}
+
+This \verb|admin.crt| will be the Certificate that admin users are going to use to authenticate into K8s Cluster.
+
+\paragraph{How to use Admin User certificate}
+
+\textbf{Not used way}
+\begin{codetemplate}{}
+\begin{verbatim}
+$ curl https://kube-apiserver:6443/api/v1/pods \
+    --key admin.key --cert admin.crt \
+    --cacert ca.crt
+\end{verbatim}
+\end{codetemplate}
+
+\textbf{Used way - Kubeconfig file}
+\begin{codetemplate}{~/.kube/config}
+\begin{verbatim}
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority: TST_ca.crt
+    server: https://<HA_TST_Proxy>:6443
+  name: TST_cluster
+- cluster:
+    certificate-authority: PRD_ca.crt
+    server: https://<HA_PRD_Proxy>:6443
+  name: PRD_cluster
+- cluster:
+    insecure-skip-tls-verify: true
+    server: https://<RANCHER_URL>/k8s/clusters/c-u7i98
+  name: STA_Rancher_Cluster
+- cluster:
+    certificate-authority-data: "LS0tLS1CRUdJTiBDR..." # base64 encoded
+    server: https://<RANCHER_URL>/k8s/clusters/c-kt3ik
+  name: PRD_Rancher_Cluster
+
+contexts:
+- context:
+    cluster: TST_cluster
+    namespace: default
+    user: kubernetes-admin
+  name: TST_cluster
+- context:
+    cluster: PRD_cluster
+    namespace: default
+    user: kubernetes-admin
+  name: PRD_cluster
+  ...
+
+current-context: TST_cluster
+kind: Config
+users:
+- name: kubernetes-admin
+  user:
+    client-certificate: admin.crt
+    client-key: admin.key
+\end{verbatim}
+\end{codetemplate}
+
+\begin{blocktemplateII}{NOTE}
+If the server field in your kubeconfig file is not pointing to any of your Kubernetes master nodes directly, it is very likely pointing to a \textbf{load balancer}
+that is distributing traffic across the control plane (master nodes). 
+This is the best practice setup in \textbf{high-availability (HA)} Kubernetes clusters. They should be an \textbf{NGNIX} or \textbf{HAProxy}
+\begin{itemize}
+    \item Multiple master nodes are deployed for redundancy and fault tolerance.
+    \item If the kubeconfig is configured to point to a single master node, the failure of that node would cause the API server to be unreachable.
+    \item By configuring the server field to point to a load balancer, you ensure that requests from \verb|kubectl| (or any other Kubernetes client) are distributed across the available master nodes. If one master node fails, the load balancer will redirect traffic to the others.
+\end{itemize}
+\end{blocktemplateII}
+
+\begin{blocktemplateIII}{WARNING}
+For all this certificates to work, and validate each other, all the clients and servers need a copy of the CA's root certificate.
+\end{blocktemplateIII}
+
+\paragraph{Other User/Server Certificates}
+Like the ones for Kube-apiserver, Kube-scheduler Kubelet, Proxy, Kube-controller, etc. You would need to follow the procedure explaining just before with the \textbf{Admin certificate} but changing the naming of the certificates.
+
+\textbf{Etcd-server:} you need to specify on the configuration the location of the certificate and private key:
+\begin{codetemplate}{}
+\begin{verbatim}
+--key-file=/path/to/certs/etcd-server.key
+--cert-file=/path/to/certs/etcd-server.crt
+--client-cert-auth=true
+--peer-cert-file=/path/to/certs/etcd-peer1.crt
+--peer-client-cert-auth=true
+--peer-key-file=/etc/kubernetes/pki/etcd/peer.key
+--peer-trusted-ca-file=/etc/kubernetes/pki/etcd/ca.crt
+--trusted-ca-file=/etc/kubernetes/pki/etcd/ca.crt
+\end{verbatim}
+\end{codetemplate}
+
+\textbf{Kube-apiserver:} the key at this point is to configure not just one DNS, a lot of them because it is the component called by all the rest of k8s, so at first, generate a file called \verb|openssl-apiserver.conf|
+\begin{codetemplate}{openssl-apiserver.conf}
+\begin{verbatim}
+[req]
+req_extensions = v3_req
+distinguised_name = req_distinguished_name
+[ v3_req ]
+basicConstraints = CA:false
+keyUsage = nonRepudiation,
+subjectAltName = @alt_names
+[ alt_names ]
+DNS.1 = kubernetes
+DNS.2 = kubernetes.default
+DNS.3 = kubernetes.default.svc
+DNS.4 = kubernetes.default.svc.cluster.local
+IP.1 = 10.96.0.1
+IP.2 = 172.17.0.87
+\end{verbatim}
+\end{codetemplate}
+
+Then use it when creating the \textbf{CSR}:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ openssl req -new apiserver.key -subj "/CN=kube-apiserver" \
+    -out apiserver.csr -config openssl-apiserver.conf
+\end{verbatim}
+\end{codetemplate}
+
+On the configuration file of the kube-apiserver:
+\begin{codetemplate}{}
+\begin{verbatim}
+--etcd-cafile=/var/lib/kubernetes/ca.pem/lib/kubernetes/ca.pem
+--etcd-certfile=/var/lib/kubernetes/ca.pem/lib/kubernetes/apiserver-etcd-client.crt
+--etcd-keyfile=/var/lib/kubernetes/ca.pem/lib/kubernetes/apiserver-etcd-client.key
+--kubelet-certificate-authority=/var/lib/kubernetes/ca.pem
+--kubelet-client-certificate=/var/lib/kubernetes/apiserver-kubelet-client.key
+--kubelet-https=true
+--service-account-key-file=/var/lib/kubernetes/service-account.pem
+--client-ca-file=/var/lib/kubernetes/ca.pem
+--tls-cert-file=/var/liber/kubernetes/apiserver.crt
+--tls-private-key-file=/var/lib/kubernetes/apiserver.key
+\end{verbatim}
+\end{codetemplate}
+
+\textbf{Kubelet server:} as we know, it is running on each node, and it is the resource which the \textbf{apiserver}
+talks to monitor the node as well as send information regarding what pods to schedule on this node. So you need a certificate privatekey pairs for each kubelet,
+which means on each node in the cluster. This certificate is going to be named with the label of the \textbf{node}: node01, node02, node03, etc.
+
+On the kubelet configuration file:
+\begin{codetemplate}{}
+\begin{verbatim}
+kind: KubeletConfiguration
+apiVersion: kubelet.config.k8s.io/v1beta1
+authentication:
+    x509:
+        clientCaFile: "/var/lib/kubernetes/ca.pem
+authorization:
+    mode: Webhook
+clusterDomain: "cluster.local"
+clusterDNS:
+    - "10.32.0.10"
+podCIDR: "${POD_CIDR}"
+resolvConf: "/run/systemd/resolve/resolv.conf"
+runtimeRequestTimeout: "15m"
+tlsCertFile: "/var/lib/kubelet/kubelet-node01.crt"
+tlsPrivateKeyFile: "/var/lib/kubelet/kubelet-node01.key"
+\end{verbatim}
+\end{codetemplate}
+
+On the other hand, kubelet perform as a client too, so it needs certificate to authenticate into the kube-apiverver, so the clients should be named mandatory: \textbf{system:node:node0X}. To manage their permissions the nodes should be added to a group called \textbf{system}.
+
+\subsubsection{How to generate and configure all the K8s Certificates?}
+You need to know that if you create the \textbf{K8s Cluster from scratch} (without using \verb|kubeadm|), all the certificated needs to be generated, properly stored and configured by yourself.
+But, if you rely on \textbf{kubeadm}, it takes care of automatically generating and configuring the cluster for you.
+As well as deploy all the components as native services (Pods) in the nodes in the hard way, it configure them properly to catch the generated certificates it has previously generated.
+
+\subsubsection{Certificate Details}
+\paragraph{Where can I find the certificates?}
+At first, to know which certificate belong to which resource, it is not enough trying to guess it based on the name convention. The good way of doing is: \textbf{checking the configuration files of the resources}. 
+For example for the \textbf{kube-apiserver}, you can find the template config in: 
+\begin{codetemplate}{}
+\begin{verbatim}
+/etc/kubernetes/manifests/kube-apiserver.yaml
+\end{verbatim}
+\end{codetemplate}
+
+The good way to check it:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ kubectl describe po <resource> | grep -i "cert" 
+\end{verbatim}
+\end{codetemplate}
+
+\paragraph{How can I see all the data inside the certificate?}
+\begin{codetemplate}{}
+\begin{verbatim}
+$ openssl x509 -in /etc/kubernetes/pki/apiserver.crt -text -noout
+\end{verbatim}
+\end{codetemplate}
+
+\textbf{Subject:CN} The Common Name (CN) is the primary identifier within this field, it usually represents the hostname or domain name of the server.
+
+\textbf{Subject:SAN} The Subject Alternative Name (SAN) field is an extension of the certificate that allows multiple identifiers (domains, IP addresses, email addresses, etc.) to be included in a single certificate. They are used when a certificate needs to secure multiple hostnames. 
+
+\textbf{Validity}  refers to the time frame during which the certificate is considered valid and trusted by clients. It is defined by two dates:
+\begin{itemize}
+    \item Not Before (Start Date)
+    \item Not After (Expiration Date)
+\end{itemize}
+
+\textbf{Issuer:} entity responsible for signing and issuing the digital certificate, so the issuer is typically the Certificate Authority (CA). 
+
+\paragraph{Check certificate issues?}
+When you think there are certificates issues, you will start checking logs of the nodes:
+\begin{itemize}
+    \item If the components are Pods/DaemonSets:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ kubectl logs etcd-master
+\end{verbatim}
+\end{codetemplate}
+    \item If the components are services:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ journalctl -u etcd.service -l
+\end{verbatim}
+\end{codetemplate}
+\end{itemize}
+
+\begin{blocktemplateIII}{WARNING}
+If the \textbf{kube-apiserver} is down regarding a certificate issue, the kubectl command won't work, so you will need to do:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ docker ps
+\end{verbatim}
+\end{codetemplate}
+\begin{codetemplate}{}
+\begin{verbatim}
+$ docker logs <container>
+\end{verbatim}
+\end{codetemplate}
+\end{blocktemplateIII}
+
+\subsection{Certificates API}
+
+\subsubsection{Need of the API?}
+As far as we have seen, does not matter if it is done by \textbf{kubeadm} tool or from scratch. The first thing kubeadm or we (in case of scratch) needs to do
+is create the CA in one of the master nodes. Then whenever a component or user want to create a new certificates, needs to use the CA of this master node and sign the certificate.
+So one of the admins should access the master node and sign the CSR with the CA.
+But as your infraestructure and your teams growth, a better way of managing CSR's is needed. As well as too manage / rotate certificates when they expire.
+
+\subsubsection{How does Certificate API works?}
+
+That's why K8s has a built-in certificates API that can do this for you. So you just need to send your CSR directly to K8s API.
+
+So now when the administrator receives the CSR, instead of loging into the master node and sign the request with the CA, he should create a K8s resource: \textbf{CertificateSigningRequest},
+that way, all the CSR's can be seen by the administrators of the cluster, and the request can be \textbf{reviewed and approved} using fer \textbf{kubectl commands}. Once the request is signed, the certificate can be extracted and shared with the user.
+
+So know the procedure is:
+\begin{enumerate}
+    \item The user creates his private key and the CSR and sends it to the administrator:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ openssl genrsa -out alex.key 2048
+\end{verbatim}
+\end{codetemplate}
+\begin{codetemplate}{}
+\begin{verbatim}
+$ openssl req -new -key alex.key -subj "/CN=alex" -out alex.csr
+\end{verbatim}
+\end{codetemplate}
+
+    \item The administrator takes the key and creates \verb|CertificateSigningRequest| resource in K8s:
+\begin{codetemplate}{}
+\begin{verbatim}
+apiVersion: certificates.k8s.io/v1
+kind: CertificateSigningRequest
+metadata:
+    name: alex
+spec:
+    expirationSeconds: 600
+    groups:
+    - system:authenticated
+    signerName: kubernetes.io/kub-apiserver-client
+    usages:
+    - digital signature
+    - key encipherment
+    - server auth
+    request: # cat alex.csr | base64
+        IYHGFkakdhks3d&fdasf
+        kfjlkjsu8ygfasdfjdfj
+        ...
+\end{verbatim}
+\end{codetemplate}
+\end{enumerate}
+
+\begin{blocktemplateIII}{WARNING}
+Inside of the resource \verb|CertificateSigningRequest| the CSR should be introduced into the \verb|request| field
+but encoded in base64.
+\begin{codetemplate}{}
+\begin{verbatim}
+$ cat alex.csr | base64
+\end{verbatim}
+\end{codetemplate}
+\end{blocktemplateIII}
+
+Once the object is created, the certificate signing request can be seen by administrators:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ kubectl get csr <CertificateSigningRequest_name>
+\end{verbatim}
+\end{codetemplate}
+
+And then approve it or deny it:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ kubectl certificate approve <CertificateSigningRequest_name>
+\end{verbatim}
+\end{codetemplate}
+\begin{codetemplate}{}
+\begin{verbatim}
+$ kubectl certificate deny <CertificateSigningRequest_name>
+\end{verbatim}
+\end{codetemplate}
+
+The certificate can be extracted from the csr decoding it. It is always under \textbf{.status.certificate}:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ kubectl get csr alex -o yaml | grep -i "certificate:"
+\end{verbatim}
+\end{codetemplate}
+\begin{codetemplate}{}
+\begin{verbatim}
+$ echo "oisyATDK09..." | base64 -d
+\end{verbatim}
+\end{codetemplate}
+
+\subsection{Kubeconfig}
+\subsection{Kubeconfig File}
+In order to authenticate into a K8s Cluster, we can do it in 2 not very useful ways:
+
+\begin{enumerate}
+    \item Pinging the API with the certificates:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ curl https://<loadbalancer_url>:6443/api/v1/pods \
+    -- key admin.key --cert admin.crt --cacert ca.crt
+\end{verbatim}
+\end{codetemplate}
+    \item Using the \verb|kubeconfig| with the flags of the certificates:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ kubectl get po \
+    -- server <loadbalancer_url>:6443
+    --client-key admin.key
+    --client-certificate admin.crt
+    --certificate-authority ca.crt
+\end{verbatim}
+\end{codetemplate}
+\end{enumerate}
+
+But the most spreaded way of doing is to have a \textbf{kubeconfig file}. The default location for this file which you don't have to specify when doing \verb|kubectl| is:
+\begin{codetemplate}{}
+\begin{verbatim}
+~/.kube/config
+\end{verbatim}
+\end{codetemplate}
+
+If you want to use another \verb|kubeconfig| file or another location, you will need to specify it like this:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ kubectl get pods --kubeconfig /path/to/your/custom/kubeconfig
+\end{verbatim}
+\end{codetemplate}
+
+The \verb|kubeconfig| has 3 sections:
+\begin{itemize}
+    \item \textbf{clusters:} different K8s Clusters you have access to. Because it is common to have different clusters, one for sandbox, other for test, other for dev, other for prod, etc.
+    \item \textbf{users:} user accounts for different cluster accesses. They will have different permissions on the different clusters.
+    \item \textbf{contexts:} marry users with clusters together, defining which user match which cluster. For example you can create a context called: admin@production.
+\end{itemize}
+
+\begin{codetemplate}{~/.kube/config}
+\begin{verbatim}
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority: TST_ca.crt
+    server: https://<HA_TST_Proxy>:6443
+  name: TST_cluster
+- cluster:
+    certificate-authority: PRD_ca.crt
+    server: https://<HA_PRD_Proxy>:6443
+  name: PRD_cluster
+- cluster:
+    insecure-skip-tls-verify: true
+    server: https://<RANCHER_URL>/k8s/clusters/c-u7i98
+  name: STA_Rancher_Cluster
+- cluster:
+    certificate-authority-data: "LS0tLS1CRUdJTiBDR..." # base64 encoded
+    server: https://<RANCHER_URL>/k8s/clusters/c-kt3ik
+  name: PRD_Rancher_Cluster
+
+contexts:
+- context:
+    cluster: TST_cluster
+    namespace: default
+    user: kubernetes-admin
+  name: kubernetes-admin@TST
+- context:
+    cluster: PRD_cluster
+    namespace: default
+    user: kubernetes-admin
+  name: kubernetes-admin@PRD
+  ...
+
+current-context: TST_cluster
+kind: Config
+users:
+- name: kubernetes-admin
+  user:
+    client-certificate: admin.crt
+    client-key: admin.key
+\end{verbatim}
+\end{codetemplate}
+
+To set you current context, you can specify the line:
+\begin{codetemplate}{}
+\begin{verbatim}
+current-context: <context-name>
+\end{verbatim}
+\end{codetemplate}
+
+\begin{blocktemplateIII}{WARNING}
+In the same way as for CSR the data should be encoded in base64, the same for \textbf{certificate-authority-data}. It should be \textbf{encoded} in base64.
+\end{blocktemplateIII}
+
+\subsection{kubectl config command}
+Help:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ kubectl config -h
+\end{verbatim}
+\end{codetemplate}
+
+To view the kubeconfig from kubectl:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ kubectl config view
+\end{verbatim}
+\end{codetemplate}
+
+To get quickly all the context available in your \textbf{kubeconfig} file:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ kubectl config get-contexts [--kubeconfig=</path/to/custom/kubeconfig>]
+\end{verbatim}
+\end{codetemplate}
+
+To change the context:
+To get quickly all the context available in your \textbf{kubeconfig} file:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ kubectl config use-context <contex-name>
+\end{verbatim}
+\end{codetemplate}
+
+To change the \textbf{namespace} context:
+To get quickly all the context available in your \textbf{kubeconfig} file:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ kubectl config set-context <contex-name> [--current] --namespace=<namespace>
+\end{verbatim}
+\end{codetemplate}
+
+\subsection{kubectx}
+\paragraph{Introduction}
+While this is excellent for hands-on practice, in a real “live” kubernetes cluster implemented for production, there could be a possibility of often switching between a large number of namespaces and clusters.
+That's why the community has developed the following magic tool: \href{https://github.com/ahmetb/kubectx}{kubectx}
+
+\paragraph{kubectx}
+List contexts:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ kubectx
+\end{verbatim}
+\end{codetemplate}
+
+Check current context:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ kubectx -c
+\end{verbatim}
+\end{codetemplate}
+
+Switch context:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ kubectx <new_context_name>
+\end{verbatim}
+\end{codetemplate}
+
+To switch back to previous context:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ kubectx -
+\end{verbatim}
+\end{codetemplate}
+
+\paragraph{kubens}
+kubens is a tool which comes included with kubectx.
+
+To switch to a new namespace:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ kubens <new_namespace>
+\end{verbatim}
+\end{codetemplate}
+
+Back to the previous namespace:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ kubens -
+\end{verbatim}
+\end{codetemplate}
+
+\subsection{API Groups}
+When we talk about K8s API, we are talking about the endpoint exposed by \textbf{kube-apiserver}.
+
+If we want to check the version of the cluster:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ curl https://master-node-01:6443/version -k
+    --key admin.key
+    --cert admin.crt
+    --cacert ca.crt
+\end{verbatim}
+\end{codetemplate}
+\begin{codetemplate}{}
+\begin{verbatim}
+$ curl https://master-node-02:6443/version -k
+    --key admin.key
+    --cert admin.crt
+    --cacert ca.crt
+\end{verbatim}
+\end{codetemplate}
+\begin{codetemplate}{}
+\begin{verbatim}
+$ curl https://load_balancer:6443/version -k
+    --key admin.key
+    --cert admin.crt
+    --cacert ca.crt
+\end{verbatim}
+\end{codetemplate}
+
+But how many endpoint does it have?
+\begin{itemize}
+    \item \textbf{/metrics:} to monitor the health of the clister.
+    \item \textbf{/healthz:} to monitor the health of the clister.
+    \item \textbf{/version:} check cluster version.
+    \item \textbf{/api:} core group.
+    \item \textbf{/apis:} named group.
+    \item \textbf{/logs:} integrating third parties logs applications.
+\end{itemize}
+
+To check all the available endpoints make the query without specifying path:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ curl https://load_balancer:6443 -k
+\end{verbatim}
+\end{codetemplate}
+
+\subsubsection{/api}
+Core K8s API, with all the resources in the stable version of K8s.
+
+\paragraph{/v1}
+\begin{itemize}
+    \item \verb|/api/v1/pods|
+    \item \verb|/api/v1/namespaces|
+    \item \verb|/api/v1/events|
+    \item \verb|/api/v1/endpoints|
+    \item \verb|/api/v1/nodes|
+    \item \verb|/api/v1/rc|
+    \item \verb|/api/v1/bindings|
+    \item \verb|/api/v1/PVC|
+    \item \verb|/api/v1/PV|
+    \item \verb|/api/v1/configmaps|
+    \item \verb|/api/v1/services|
+    \item \verb|/api/v1/secrets|
+\end{itemize}
+
+\subsubsection{/api}
+All the newer features, beta.
+
+Each resource in this section has 6 actions:
+\begin{itemize}
+    \item \textbf{list}
+    \item \textbf{get}
+    \item \textbf{create}
+    \item \textbf{delete}
+    \item \textbf{update}
+    \item \textbf{watch}
+\end{itemize}
+
+\textbf{/apps}
+\begin{itemize}
+    \item \verb|/apps/v1/replicasets|
+    \item \verb|/apps/v1/deployments|
+    \item \verb|/apps/v1/statefulsets|
+    \item \verb|/apps/v1/daemonsets|
+\end{itemize}
+\textbf{/extensions}
+\textbf{/networking.k8s.io}
+\begin{itemize}
+    \item \verb|/networking.k8s.io/v1/networkingpolicies|
+\end{itemize}
+\textbf{/storage.k8s.io}
+\textbf{/authentication.k8s.io}
+\textbf{/certificates.k8s.io}
+
+For curl you need to always specify the key, certificate and CA certificate like this:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ curl https://load_balancer:6443/version -k
+    --key admin.key
+    --cert admin.crt
+    --cacert ca.crt
+\end{verbatim}
+\end{codetemplate}
+
+But it can be really anoying, so the best option is to use:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ kubectl proxy
+\end{verbatim}
+\end{codetemplate}
+
+\verb|kubectl proxy| launches a proxy service locally on port 8001, using the endpoint, credentials and certificates
+from your \verb|kubeconfig| file. That way, you don't have to specify all this data in the cURL command.
+
+Then you can access this service:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ curl http://localhost:8001 -k
+\end{verbatim}
+\end{codetemplate}
+
+\subsection{Authorization}
+Authentication is how someone can gain access to a cluster, but authorization is, once they are on the cluster, what can they do? Authorization is needed because you would like to have different "roles" on your cluster for the different
+user accessing the cluser: 
+\begin{itemize}
+    \item \textbf{Administrators:} get, create, update, delete,... Everything as well at cluster level.
+    \item \textbf{DevOps:} get, create, update, delete,... Just at resources level. Restricted to some namespaces.
+    \item \textbf{Robots:} like Jenkins, Bamboo, etc. Just at resources level.
+\end{itemize}
+
+\subsubsection{Node Authorization}
+As we discuss before, the different kubelets on the different nodes needs permissions to check things and
+share them with the kube-apiserver, so they need to have some special access on the cluster. This access is given by the \textbf{Node Authorizer}. We discussed
+that kubelets should be part of the \textbf{system:nodes} and have a name prefixed with system node.
+So any request coming from a user with the name system node and part of the system:nodes group is authorized by the \textbf{Node Authorizer}.
+
+\subsubsection{ABAC}
+\textbf{Atribute Based Authorization Control} is whre you associate a user or a group of users with a set of permissions.
+So as an example we can say that a user can:
+\begin{itemize}
+    \item View Pods
+    \item Create Pods
+    \item Delete Pods
+\end{itemize}
+
+You can do creating the following policy file:
+\begin{codetemplate}{}
+\begin{verbatim}
+{
+    "kind": "Policy", 
+    "spec": {
+        "user": "dev-user", 
+        "namespace": "*", 
+        "resource": "pods", 
+        "apiGroup":"*"
+    }
+}
+\end{verbatim}
+\end{codetemplate}
+
+So you can pass this into the API server to apply it. But as you can imagine, this is not a good way of operate, because any time we want to
+change some policies, we are going to be modifying these policies manually and restart the kube-apiserver.
+
+\subsubsection{RBAC}
+\textbf{Role-Based Access Control} makes the management much easier. Instead of directly associate a user or a group with a set of permissions (policies), we define \textbf{roles}, for example developers. And we assing to this role the required permissions for developers. The we just need to associate all the developers to that role.
+
+When a change needs to be mande to the user's access we simply modify the role
+and it will reflects on all developers (all users assigned to developer role) immediately. So it provides a more standard approach to managing access within the K8s Cluster.
+
+\subsection{Webhook}
+You can find third party tools (like for example Open Policy Agent or Rancher) which help with admissions control and authorization.
+
+\subsubsection{Authorization Mode}
+Your K8s Cluster will use the Authorization Mode that you configure on the kube-apiserver:
+\begin{itemize}
+    \item AlwaysAllow
+    \item AlwaysDeny
+    \item Node
+    \item RBAC
+    \item ABAC
+    \item Webhook
+\end{itemize}
+
+You can check that on the kubeapiserver configuration, if nothing specified will be by default AlwaysAllow:
+\begin{codetemplate}{}
+\begin{verbatim}
+--authorization-mode=AlwaysAllow
+\end{verbatim}
+\end{codetemplate}
+
+More than one can be specified, and then the users will be authorized in the same order it has been specified, so every time a method denies the request it goes to the next one in the chain, and as soon as a module approves the request no more check are done and the user is granted permissions. 
+\begin{codetemplate}{}
+\begin{verbatim}
+--authorization-mode=Node,RBAC
+\end{verbatim}
+\end{codetemplate}
+
+\subsubsection{RBAC}
+\paragraph{Roles and RoleBindings}
+We have explained what is RBAC in the previous lecture. Getting down to business, how do we create roles? As you are imagine, YES! Creatin a K8s object like this:
+
+\begin{codetemplate}{}
+\begin{verbatim}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+    name: developer
+    namespace: <namespace_name>
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["list", "get", "create", "update", "delete"]
+- apiGroups: [""]
+  resources: ["ConfigMaps"]
+  verbs: ["list", "get", "create"]
+\end{verbatim}
+\end{codetemplate}
+
+\textbf{apiGroups:} as we have seen before, this field identifies the group of resources within Kubernetes.
+\begin{itemize}
+    \item \verb|""| (default): Refers to the core API group, which includes resources like pods, services, namespaces, nodes, etc. If you're working with core resources like ConfigMaps, Secrets, or Pods, you would use "" for apiGroup.
+    \item \verb|apps|: This is the group that contains resources like deployments, statefulsets, and daemonsets.
+    \item \verb|batch|: Refers to jobs and cron jobs. Resources like Job and CronJob belong to this group.
+    \item \verb|networking.k8s.io|: For networking-related resources like NetworkPolicy and Ingress.
+    \item \verb|policy|: Contains policies like PodDisruptionBudget.
+    \item \verb|storage.k8s.io|: For storage-related resources like StorageClass, VolumeAttachment, and CSIDriver.
+\end{itemize}
+
+\begin{blocktemplate}{NOTE}
+Difference between list and get?
+\begin{itemize}
+    \item \textbf{list:} Fetches a list of all resources of a certain type. When you want an overview of all resources (e.g., all pods or configmaps)
+\begin{codetemplate}{}
+\begin{verbatim}
+$ kubectl get po -n kube-system
+\end{verbatim}
+\end{codetemplate}
+    \item \textbf{get:} Fetches a specific resource by name. When you want details or \textbf{describe} a single resource (e.g., one pod or one configmap)
+\begin{codetemplate}{}
+\begin{verbatim}
+$ kubectl get/describe po my-pod -n kube-system [-o yaml]
+\end{verbatim}
+\end{codetemplate}
+\end{itemize}
+
+One important thing to know is that \textbf{get and list are distinct verbs in Kubernetes RBAC, and get does not implicitly grant the ability to list resources}.
+\\\\
+If a user only has get permission: they can retrieve details of specific resources (e.g., kubectl get pod my-pod), but they cannot retrieve a list of resources (e.g., kubectl get pods).
+\end{blocktemplate}
+
+The next step is to link the user to that role, for this purpose we have the resource: \textbf{RoleBinding}:
+\begin{codetemplate}{}
+\begin{verbatim}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+    name: alex-developer-binding
+    namespace: <namespace_name>
+subjects:
+- kind: User  # Or ServiceAccount or Group
+  name: alex  # The user or service account you are granting access to
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: developer  # Refers to the ClusterRole above
+  apiGroup: rbac.authorization.k8s.io
+\end{verbatim}
+\end{codetemplate}
+
+\begin{blocktemplateII}{NOTE}
+Roles and RoleBinding are \textbf{namespace-scoped}, or what is the same: \textbf{sensitive to namespaces}. So if you do not specify a namespace in the Role, K8s will default to using the \textbf{namespace where the Role object itself is created}. In other words, the Role will only apply to the namespace where you create it.
+\\\\
+To give access to multiple namespaces, you would need to create a Role in each of the namespaces where you want to apply the permissions. You cannot assign a Role to multiple namespaces directly. Instead, you will need to:
+\begin{itemize}
+    \item Create a \textbf{Role} in each of the desired namespaces (for example, in 3 namespaces).
+    \item Bind the Role to the user or service account in each namespace using a \textbf{RoleBinding}.
+\end{itemize}
+If you want to give access to all namespaces, instead of using a Role, you should use a \textbf{ClusterRole} and a \textbf{ClusterRoleBinding}, without specifying any namespace for example:
+
+\begin{codetemplate}{}
+\begin{verbatim}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+    name: developer
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["list", "get", "create", "update", "delete"]
+- apiGroups: [""]
+  resources: ["ConfigMaps"]
+  verbs: ["list", "get", "create"]
+\end{verbatim}
+\end{codetemplate}
+
+\begin{codetemplate}{}
+\begin{verbatim}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: alex-developer-binding
+subjects:
+- kind: User  # Or ServiceAccount or Group
+  name: alex  # The user or service account you are granting access to
+  apiGroup: rbac.authorization.k8s.io
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: system:bootstrappers:kubeadm:default-node-token
+roleRef:
+  kind: Role
+  name: developer  # Refers to the ClusterRole above
+  apiGroup: rbac.authorization.k8s.io
+\end{verbatim}
+\end{codetemplate}
+\end{blocktemplateII}
+
+\begin{blocktemplateI}{NOTE 2}
+You can allow just permissions to \textbf{specific named resources} within a resource type, rather than granting access to all resources of that type.
+\\\\
+In other words, while the resources field specifies what types of resources (e.g., pods, configmaps) the Role can manage, the resourceNames field allows you to narrow it down to only specific instances of those resources based on \textbf{name exact match}.
+\begin{codetemplate}{}
+\begin{verbatim}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: multi-resource-access
+  namespace: my-namespace
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "list"]
+  resourceNames: ["my-pod", "another-pod"]  # Access limited to these two pods
+- apiGroups: [""]
+  resources: ["configmaps"]
+  verbs: ["get", "list"]
+  resourceNames: ["my-configmap", "another-configmap"]  
+                # Access limited to these two configmaps
+\end{verbatim}
+\end{codetemplate}
+\end{blocktemplateI}
+
+\begin{blocktemplate}{NOTE 3}
+In Kubernetes \textbf{RBAC system}, \textbf{groups} are defined and managed \textbf{externally} (e.g., through an identity provider like \textbf{LDAP}, \textbf{OIDC}, or another authentication system). 
+\\\\
+Kubernetes itself does not have built-in functionality to \textbf{create or manage group membership}. However, you can reference groups in \textbf{RoleBindings} and \textbf{ClusterRoleBindings} by specifying the group name in the RBAC configuration.
+\end{blocktemplate}
+
+To check the roles and rolebindings:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ kubectl get/describe roles
+\end{verbatim}
+\end{codetemplate}
+\begin{codetemplate}{}
+\begin{verbatim}
+$ kubectl get/describe rolebindings
+\end{verbatim}
+\end{codetemplate}
+
+What if you like a simple user want to check if you have access to a particular resource in the cluster?
+\begin{codetemplate}{}
+\begin{verbatim}
+$ kubectl auth can-i create deployments [--namespace=]
+\end{verbatim}
+\end{codetemplate}
+\begin{codetemplate}{}
+\begin{verbatim}
+$ kubectl auth can-i delete nodes -A
+\end{verbatim}
+\end{codetemplate}
+
+Just if you are admin, you can:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ kubectl auth can-i delete pods --as maria [--namespace=]
+\end{verbatim}
+\end{codetemplate}
+
+\paragraph{ClusterRoles and ClusterRoleBindings}
+We have discussed about Roles and RoleBindings in the previous section, and we discussed that are \textbf{namespaced}, meaning they are created within namespaces (if you don't specify namespace they will be created on the current namespace). But what about accesses to list or get nodes? Nodes are not namespaced, they are \textbf{cluster-wide} and they cannot be associated to any particular namespace. There are more \textbf{cluster-wide} resources:
+\begin{itemize}
+    \item Nodes
+    \item PV's
+    \item ClusterRoles
+    \item ClusterRoleBindings
+    \item CertificateSigningRequests
+    \item Namespaces
+    \item ...
+\end{itemize}
+
+To know all the \textbf{non-namespaced} resources:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ kubectl api-resources --namespaced=false
+\end{verbatim}
+\end{codetemplate}
+
+To know all the \textbf{namespaced} resources:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ kubectl api-resources --namespaced=true
+\end{verbatim}
+\end{codetemplate}
+
+A ClusterRole is exactly the same as a Role, just that it can provide access to \textbf{cluster-wide} resources. The same for ClusterRoleBinding.
+
+\begin{codetemplate}{}
+\begin{verbatim}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+    name: developer
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["list", "get", "create", "update", "delete"]
+- apiGroups: [""]
+  resources: ["ConfigMaps"]
+  verbs: ["list", "get", "create"]
+\end{verbatim}
+\end{codetemplate}
+
+\begin{codetemplate}{}
+\begin{verbatim}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: alex-developer-binding
+subjects:
+- kind: User  # Or ServiceAccount or Group
+  name: alex  # The user or service account you are granting access to
+  apiGroup: rbac.authorization.k8s.io
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: system:bootstrappers:kubeadm:default-node-token
+roleRef:
+  kind: Role
+  name: developer  # Refers to the ClusterRole above
+  apiGroup: rbac.authorization.k8s.io
+\end{verbatim}
+\end{codetemplate}
+
+\begin{blocktemplateII}{NOTE}
+As well as give access to all cluster-wide resources, it gives as well permissions to see resources on \textbf{ALL} namespaces on the cluster.
+\end{blocktemplateII}
+
+To check permissions in \textbf{not namespaced resources}:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ kubectl auth can-i get nodes -A
+\end{verbatim}
+\end{codetemplate}
+
+\subsection{ServiceAccounts and Tokens}
+\subsubsection{Introduction}
+There are two types of accounts in K8s:
+\begin{itemize}
+    \item \textbf{User Accounts:} used by humans, can be for an administrator, a devops, etc.
+    \item \textbf{Service Accounts:} used by machines, like an applucation to interact with the K8s Cluster (for example Prometheus, Fluentd, Bamboo, Jenkins).
+\end{itemize}
+
+\subsubsection{Creation and Usage}
+To create a service account:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ kubectl create serviceaccount <serviceaccount_name>
+\end{verbatim}
+\end{codetemplate}
+
+But, how can we make use of this \textbf{ServiceAccount} in order to internal or external machines authenticate into the cluster? The answer is with tokens!
+After \textbf{ServiceAccount} creation, we should as well create a \textbf{token} associated to it using the \textbf{TokenRequest API}:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ kubectl create token <serviceaccount_name> [--duration 10m] # By default 1m
+\end{verbatim}
+\end{codetemplate}
+
+If you want to directly attach the token to a Pod in order to use them from the Pod running application:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ kubectl create token <serviceaccount_name> [--duration 10m] \
+    --bound-object-kind Pod --bound-object-name mypod
+\end{verbatim}
+\end{codetemplate}
+
+If you want to bound the token into a Secret:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ kubectl create token <serviceaccount_name> [--duration 10m] \
+    --bound-object-kind Secret --bound-object-name mysecret
+\end{verbatim}
+\end{codetemplate}
+
+The generated token will be a bearer token, which means is simply a cryptographic token (usually a JWT or opaque token) that proves the client's identity.
+In K8s case, it is a JWT (JSON Web Token) token, which is a compact, URL-safe way to represent claims transferred between two parties. It's often used in modern web applications and APIs for authentication and authorization purposes. JWT tokens are part of the OAuth 2.0 framework.
+\\\\
+A JWT token contains claims (pieces of information like user ID, validity time, roles, or permissions) in a JSON format, encoded and signed digitally. It's composed of three parts separated by dots ("."):
+\begin{itemize}
+    \item \textbf{Header:} Contains metadata about the token, such as the type of token and the algorithm used for signing.
+    \item \textbf{Payload:} Contains the claims. These claims represent the data being transferred (e.g., user information, permissions, validity, etc.).
+    \item \textbf{Signature:} Ensures that the token hasn't been tampered with and verifies the sender's authenticity.
+\end{itemize}
+Each part is base64-encoded, and the sections are joined together with periods ".", forming a compact token that looks like this:
+\begin{codetemplate}{}
+\begin{verbatim}
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG
+4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+\end{verbatim}
+\end{codetemplate}
+
+We can decode the token in two ways:
+\begin{itemize}
+    \item From command line:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ jq -R 'split(".") | select(lenght > 0) | .[0],.[1] | @base64d \
+    | freomjson' <<< euyyrugjgfcuagAguydaftuyfas.fnalfnakg3gj.fsaldj...
+\end{verbatim}
+\end{codetemplate}
+    \item Using the webpage: \href{https://jwt.io/}{https://jwt.io/}. Where as well you will find more information about JWT tokens.
+\end{itemize}
+
+The tokens generated by the TokenRequest API will be:
+\begin{itemize}
+    \item Audience Bound
+    \item Time Bound
+    \item Object Bound
+\end{itemize}
+
+\begin{blocktemplateI}{NOTE}
+You can use the token to authenticate via curl:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ curl https://<loadbalancer_ip>:6443/api \
+    -H "Authorization: Bearer <your_token_in_clear>"
+\end{verbatim}
+\end{codetemplate}
+\begin{codetemplate}{}
+\begin{verbatim}
+$ curl https://<loadbalancer_ip>:6443/api \
+    -H "Authorization: Bearer $(cat /path/to/tokenfile)"
+\end{verbatim}
+\end{codetemplate}
+\end{blocktemplateI}
+
+Once the \textbf{ServiceAccount} and its \textbf{token} are created you can create \textbf{Roles} for it and bind this roles using \textbf{RoleBindings}.
+
+\begin{blocktemplateIII}{WARNING}
+If you want to create a token associated to a service account with non expiring token you can do it creating the following secret object, which as well will create a secret storing the token:
+\begin{codetemplate}{}
+\begin{verbatim}
+apiVersion: v1
+kind: Secret
+type: kubernetes.io/service-account-token
+metadata:
+  name: mysecretname
+  annotations:
+    kubernetes.io/service-acount.name: <serviceaccount_name>
+\end{verbatim}
+\end{codetemplate}
+You should only create a service account token Secret object if you can't use the \textbf{TokenRequest API} to obtain a token, and the security exposure of persisting a non-expiring token credentials in a readable API Object is acceptable to you.
+\end{blocktemplateIII}
+
+\subsubsection{Namespace ServiceAccount}
+For every namespace in K8s, a \textbf{ServiceAccount} named \textbf{default} is automatically created, so each namespace has its own default ServiceAccount.
+Whenever a Pod is created into the namespace, the default ServiceAccount is associated and its token is automatically mounted to that pod in an special way (projected volume from the kube-api-access). You will find the token inside:
+\begin{codetemplate}{}
+\begin{verbatim}
+/var/run/secrets/kubernetes.io/serviceaccount
+\end{verbatim}
+\end{codetemplate}
+
+This default ServiceAccount is quite restricted, it only has permissions to run basic K8s API queries.
+If you want to use a different ServiceAccount you can specify it on the Pod deffinition file. As well, the token created
+for the ServiceAccount will have a restricted lifetime.
+
+\subsubsection{Security inside Docker containers}
+When you run a docker container, you have the option to define a set of \textbf{security standards} such as:
+\begin{itemize}
+    \item \verb|--user=titocampis|: to define the user inside the container.
+    \item \verb|--cap-add MAC_ADMIN|: to define Linux capabilities.
+\end{itemize}
+
+This can be configured in K8s as well using \textbf{securityContext}, consider that:
+\begin{itemize}
+    \item If \textbf{securityContext} is defined at Pod level will apply to all containers inside the Pod.
+    \item If \textbf{securityContext} is defined at container level it will override the \textbf{securityContext} defined at Pod level.
+\end{itemize}
+
+How to define \textbf{securityContext} at \textbf{Pod level}:
+c\begin{codetemplate}{}
+\begin{verbatim}
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my_pod
+spec:
+  securityContext:
+    runAsUser: "titocampis" # Capabilities are not supported at Pod lvl
+  ...
+  containers:
+  - name: ...
+\end{verbatim}
+\end{codetemplate}
+
+How to define \textbf{securityContext} at \textbf{container level}:
+c\begin{codetemplate}{}
+\begin{verbatim}
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my_pod
+  ...
+  containers:
+  - name: ...
+    spec:
+    securityContext:
+        runAsUser: "titocampis"
+        capabilities:
+          add: ["MAC_ADMIN"]
+\end{verbatim}
+\end{codetemplate}
+
+\subsection{Network Policies}
+Egress and ingress traffic refer to the flow of data in and out of a network or device:
+\begin{itemize}
+    \item \textbf{Ingress Traffic:} This is data coming into a network or a device from an external source, such as incoming requests or data from the internet to your internal servers, systems, or devices.
+    \item \textbf{Egress Traffic:} This is data leaving a network or a device, going from inside the network to an external destination, like when your servers or devices send data to the internet or an external server.
+\end{itemize}
+
+In K8s we have a cluster with a set of Nodes hosting a set of pods and services. Inside the cluster, each node has an IP address, as well as does each pod and service. On requisite for K8s is that Pods always need to be able to communicate with each other
+without having to configure any additional settings like routes. That's why K8s is configured by default with \textbf{All Allow rule}, which \textbf{allows any traffic from any pod to another pod} inside the cluster.
+
+But as you can imagine, it can be a problem, because imagine that your customers don't want his database to be accessible by other pods of other applications running on the cluster. To do that, you will have to implement a \textbf{Network Policy} to allow traffic to the DB server only from Pods comming from this application.
+
+\textbf{NetworkPolicy} is another namespaced object of K8s. They can be linked to one or more pods, and you can define rules to control the traffic to this Pod, it is like a kind of \textbf{"capsule"}.
+
+\subsubsection{Just ingress}
+For example, you can define a rule to allow ingress trafic from the \verb|app1_pod| on port 3306. If you define a rule the rest of the egress or ingress trafic will be disabled except of this rule. In order to link NetworkPolicy to Pod you use as well as in ReplicaSets \textbf{labels and selectors}:
+\begin{codetemplate}{}
+\begin{verbatim}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: db-policy
+spec:
+  podSelector:
+    matchLabels:
+      role: db
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          name: app1_pod
+    ports:
+    - protocol: TCP
+      port: 3306
+\end{verbatim}
+\end{codetemplate}
+
+\begin{blocktemplateII}{NOTE}
+If you define \textbf{policyTypes} just as Ingress or Egress, \textbf{all traffic of the one defined will be blocked} except the rule, the other will become unalterated.
+\end{blocktemplateII}
+
+You have a label to enable traffic comming from just a namespace:
+\begin{codetemplate}{}
+\begin{verbatim}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: db-policy
+spec:
+  podSelector:
+    matchLabels:
+      role: db
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: app1
+    ports:
+    - protocol: TCP
+      port: 3306
+\end{verbatim}
+\end{codetemplate}
+
+You have a label no enable traffic comming from a range of IP's:
+\begin{codetemplate}{}
+\begin{verbatim}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: db-policy
+spec:
+  podSelector:
+    matchLabels:
+      role: db
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - ipBlock:
+        cidr: 192.168.5.10/32
+    ports:
+    - protocol: TCP
+      port: 3306
+\end{verbatim}
+\end{codetemplate}
+
+\newpage
+We can, as well, combine them as you wish:
+
+\begin{itemize}
+    \item One rule to allow just resources from namespace \verb|app1| \textbf{and} just from \verb|app1_pod|:
+\begin{codetemplate}{}
+\begin{verbatim}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: db-policy
+spec:
+  podSelector:
+    matchLabels:
+      role: db
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: app1
+      podSelector:
+        matchLabels:
+          name: app1_pod
+    ports:
+    - protocol: TCP
+      port: 3306
+\end{verbatim}
+\end{codetemplate}
+    
+    \item One rule to allow just resources from namespace \verb|app1| \textbf{or} allow ingress trafic from ip's:
+\begin{codetemplate}{}
+\begin{verbatim}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: db-policy
+spec:
+  podSelector:
+    matchLabels:
+      role: db
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: app1
+    - ipBlock:
+        cidr: 192.168.5.10/32
+    ports:
+    - protocol: TCP
+      port: 3306
+\end{verbatim}
+\end{codetemplate}
+\end{itemize}
+
+\subsubsection{Ingress and Egress}
+Egress rules can be created alone as well as Ingress rules, but they can be created together, let's see an example:
+\begin{codetemplate}{}
+\begin{verbatim}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: db-policy
+spec:
+  podSelector:
+    matchLabels:
+      role: db
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: app1
+    ports:
+    - protocol: TCP
+      port: 3306
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 192.168.5.10/32
+    ports:
+    - protocol: TCP
+      port: 3306
+\end{verbatim}
+\end{codetemplate}
+
 
 %======================================================
 \newpage
@@ -4643,14 +6881,9 @@ When it comes to storage in Docker, there are two concepts you must know about:
 \end{itemize}
 
 \subsubsection{Where does Docker stores its persistent data?}
-
-in this lecture we are going to see where and how \textbf{Docker stores data} and how it manages \textbf{file systems} of the containers. Let's start with how Docker stores data on the local file system. When you install Docker on a system it creates this folders structure at \verb|/var/lib/docker/.|
+Let's start with how Docker stores data on the local file system. When you install Docker on a system it creates this folders structure at \verb|/var/lib/docker/.|
 
 \begin{codetemplate}{}
-\begin{verbatim}
-$ kubectl create -f service-template.yaml
-\end{verbatim}
-\end{codetemplate}\begin{codetemplate}{}
 \begin{verbatim}
 |- /var/lib/docker
        |- aufs/
@@ -4678,9 +6911,9 @@ But how does Docker exactly to store the files of an image and containers? We ne
     \includegraphics[scale=0.15]{pictures/st1.png}
 \end{figure}
 
-Since every layer \textbf{ONLY STORES THE CAHNGES FROM THE PREVIOUS LAYER, AND NOT ALL THEIR DATA} it is reflected in the size as well.
+Every layer \textbf{only stores the changes from the previous layer} it is reflected in the size as well.
 
-To understand the advantages of this layered architecture let's consider a second Dockerfile, which is different but in some parts is common. Using the same image, the same python and flask dependencies, but uses a different source code to create a different application image. When you run the \verb|docker build| command to build a new image for this application, since the first three layers of both the applications are the same, d\textbf{ocker is not going to build the first three layers}, instead it reuses the first 3 layers from the cache (generated with the build of the first Dockerfile). So only creates the last two layers. That is how Docker easily and efficiently saves disc space, and saves us a lot of time during builds and updates.
+To understand the advantages of this layered architecture let's consider a second Dockerfile, which is different but in some parts is common. Using the same image, the same python and flask dependencies, but uses a different source code to create a different application image. When you run the \verb|docker build| command to build a new image for this application, since the first three layers of both the applications are the same, \textbf{docker is not going to build the first three layers}, instead it reuses the first 3 layers from the cache (generated with the build of the first Dockerfile). So only creates the last two layers. That is how Docker easily and efficiently saves disc space, and saves us a lot of time during builds and updates.
 
 \begin{figure}[H]
     \centering
@@ -4893,19 +7126,14 @@ Now yes, the random number will be written in the \verb|/opt/number.out| contain
 
 But you can imagine this is not suitable, because if the Pod restarts and now is allocated in another Node, the data will be lost!! Because it is only on the last Node. For that the solution involves 2 actors:
 
+\textbf{Use external shared storage solutions to share storage between nodes:} K8s supports several types of different shared storage solutions as:
 \begin{itemize}
-    \item \textbf{Use external shared storage solutions to share storage between nodes:} K8s supports several types of different shared storage solutions as:
-    \begin{itemize}
-        \item NFS
-        \item GlusterFS
-        \item Flocker
-        \item Ceph
-        \item AWS
-        \item Azure
-        \item Google Persisent
-    \end{itemize}
-
-    \item \textbf{Use Persistent Volumes for }
+    \item NFS
+    \item GlusterFS
+    \item Flocker
+    \item Ceph
+    \item AWS
+    \item Google Persistent
 \end{itemize}
 
 \paragraph{Example of use external shared storage solution}
@@ -4941,14 +7169,16 @@ A Persistent Volume is a cluster-wide pool of storage volumes configured by an a
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-    name: pv-vol1
+  name: pv-log
 spec:
-    accessModes:
-    - ReadWriteOnce
-    capacity:
-        storage: 1Gi
-    hostPath:
-        path: /tmp/data
+  capacity:
+    storage: 100Mi
+  accessModes:
+  - ReadWriteOnce
+  capacity:
+    storage: 1Gi
+  hostPath:
+    path: /tmp/data
 \end{verbatim}
 \end{codetemplate}
 
@@ -5012,23 +7242,23 @@ Once the PVC's are created, K8s binds (vincula) the PV's to claims based on the 
 However, if there multiple possible matches for a single claim, and you would like to specifically use a particular PV, you could still use \textbf{labels and selectors} to bind to the right PV's.
 
 \begin{blocktemplateIII}{WARNING}
-Remember the relationship between PV's and PVC's is one to one, so there cannot be more than one PVC binded to a PV. If the PVC requires less storage than the PV storage, no toher PVC's can uses the remaining capacity in the volume. If there are not available Volumes that matches the PVC, it will remain in a Pending State until newe volumes are made available on the Cluster, and when that happens, the PVC is automatically bounded.
+Remember the relationship between PV's and PVC's is one to one, so there cannot be more than one PVC binded to a PV. If the PVC requires less storage than the PV storage, no other PVC's can uses the remaining capacity in the volume. If there are not available Volumes that matches the PVC, it will remain in a Pending State until newe volumes are made available on the Cluster, and when that happens, the PVC is automatically bounded.
 \end{blocktemplateIII}
 
-\subsection{Creating a Persistent Volume Claim}
+\subsubsection{Creating a Persistent Volume Claim}
 
 \begin{codetemplate}{pvc-template.yaml}
 \begin{verbatim}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-    name: myclaim
+  name: myclaim
 spec:
-    accessModes:
-    - ReadWriteOnce
-    resources:
-        requests:
-            storage: 500Mi
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 500Mi
 \end{verbatim}
 \end{codetemplate}
 
@@ -5042,7 +7272,11 @@ $ kubectl get pvc
 If we pay attention on what we see when get pvc, we can see the PV attached to that pvc.
 \end{blocktemplate}
 
-\paragraph{Deleting Persistent Volume Claims}
+\begin{blocktemplateIII}{WARNING}
+If the \textbf{accessModes} do not match, the \textbf{PVC} will not be binded to the \textbf{PV}.
+\end{blocktemplateIII}
+
+\subsubsection{Deleting Persistent Volume Claims}
 
 Just use the  \verb|kubectl delet pvc <name>| command. But what happens with the underlying PV? You can choose what is to happen to the PV. By defaul it is set to retain, meaning the PV will remain until it is manually deleted by the administrator and it is not available for reuse by any other claims anymore, it is so romantic.
 
@@ -5096,114 +7330,29 @@ spec:
 \end{verbatim}
 \end{codetemplate}
 
-\subsection{Application Configuration}
-
-\subsection{Lab - Playing with PV's \& PVC's}
-
-\textbf{To see the content of a file it is lighter to do:}
-
-\begin{codetemplate}{}
-\begin{verbatim}
-$ kubectl exec -it <pod-name> -- cat /path/to/the/file
-\end{verbatim}
-\end{codetemplate}
-
 \begin{blocktemplateIII}{WARNING}
 It is not necessary to create a PV object to share storage bare between a Pod and the Node. It's enough to create volume in the specs of the Pod an a volumeMount in the container, and you will do the same it does docker, in your system. 
 
 But this only applies to bare shared storage between a Node an a Pod, if you want to persist the storage between all Nodes it is more complex, so you have to create PV's and PVC's.
 \end{blocktemplateIII}
 
-A hardly recommendation is that when the change is little, you can do it with \verb|kubectl edit| command, but when it is hard, use:
-
-\begin{codetemplate}{}
-\begin{verbatim}
-$ kubectl get po webapp -o yaml > pod.yaml
-\end{verbatim}
-\end{codetemplate}
-
-Then edit the template and delete and create the new Pod with the changes, it has more verbose and tolerance to errors.
-
-Once did it, you can look at the Node directory associated and see if it is used or not by the Pod, and actually yes, it doeees!!!!!!!
-
-\begin{codetemplate}{}
-\begin{verbatim}
-$ cat /var/log/webapp
-\end{verbatim}
-\end{codetemplate}
-
-\subsubsection{Question 9}
-
-\begin{codetemplate}{}
-\begin{verbatim}
-$ kubectl get pvc -o yaml | grep -i access -A 5
-\end{verbatim}
-\end{codetemplate}
-
-\begin{codetemplate}{}
-\begin{verbatim}
-$ kubectl get pv -o yaml | grep -i access -A 5
-\end{verbatim}
-\end{codetemplate}
-
-OR:
-
-\begin{codetemplate}{}
-\begin{verbatim}
-$ kc get pvc -o jsonpath='{..accessModes}'
-\end{verbatim}
-\end{codetemplate}
-
 \begin{blocktemplateIII}{WARNING}
 If there is storage let over in the PV, the PVC will get in all.
 \end{blocktemplateIII}
-
-\begin{codetemplate}{}
-\begin{verbatim}
-$ kubectl get pvc
-===> CAPACITY: 100Mi
-\end{verbatim}
-\end{codetemplate}
-
-\subsubsection{Question 12}
-
-Only need to modify volumes in the pod-template.yaml.
 
 \begin{blocktemplateIII}{WARNING}
 The PVC must be in the same Namespace as the Pod, if it is not like that, it won't work.
 \end{blocktemplateIII}
 
-\begin{blocktemplateII}{IMPORTANT}
-With this solution, the logs of the application will be available on every Node on the cluster!
-\end{blocktemplateII}
-
-\subsubsection{Question 16}
-
 \begin{blocktemplateIII}{WARNING}
 If you try to delete a PVC used by a Pod, it won't be definitely deleted until the Pod dies. In will remain in Terminating state.
 \end{blocktemplateIII}
-
-
-\subsubsection{Question EXTRA}
 
 \textbf{What happens if we modify, remove, or add files to the shared directory?}
 
 Wow, if you add files in the local directory they are added automatically to the pod:
 
-\begin{figure}[H]
-    \includegraphics[width=\textwidth]{pictures/wow.png}
-\end{figure}
-
 Y lo mismo sucede al reves!!! WOOOOOW!!! Quedan automagicamente conectados para siempre. Amigos para siempre do you want to be my friend...
-
-\begin{figure}[H]
-    \includegraphics[width=\textwidth]{pictures/amigosparasiemrep.png}
-\end{figure}
-\begin{figure}[H]
-    \includegraphics[width=\textwidth]{pictures/amigosforever.png}
-\end{figure}
-
-
 
 \subsection{Storage Class}
 
@@ -5277,11 +7426,21 @@ What is a network? We have 2 Linux Machines, A and B, it can be: laptops, deskto
 
 To connect the 2 Linux machines to a switch, we need an interface on each host (physical or virtual depending on the Host). And to see the interfaces from the Host, we use the following command:
 
+\begin{itemize}
+    \item View and managing link-layer (MAC-level) settings.
 \begin{codetemplate}{}
 \begin{verbatim}
 $ ip link
 \end{verbatim}
 \end{codetemplate}
+
+    \item Check network-layer (IP-level) details along with link-layer information.
+\begin{codetemplate}{}
+\begin{verbatim}
+$ ip a
+\end{verbatim}
+\end{codetemplate}
+\end{itemize}
 
 We only want the information of \textbf{eth0} interface, which it will be used to connect the machine to the switch. 
 
@@ -5291,25 +7450,18 @@ Let's assume it's a Network with the adress 192.168.1.0, so we then assign the s
     \includegraphics[width=\textwidth]{pictures/ntw2.png}
 \end{figure}
 
+To add an IP address (192.168.1.10/24) to the network interface eth0
 \begin{codetemplate}{}
 \begin{verbatim}
-$ ip addr add add 192.168.1.10/24 dev eth0
+$ ip addr add 192.168.1.10/24 dev eth0
 \end{verbatim}
 \end{codetemplate}
 
 Once the links are up and the IP addresses are assigned, the computers can now communicate with each other through the switch. The switch can only enable communication within a Network, which means it can receive packets from a Host on the Network and deliver it to other systems within the same Network.
 
-Imagine we have another2 machines in another Network at adress 192.168.2.0 and system adress according to this adress. How does a system in one Network reach a system in another Network?
-
-\begin{figure}[H]
-    \includegraphics[width=\textwidth]{pictures/ntw3.png}
-\end{figure}
-
-Once the links are up and the IP addresses are assigned, the computers can now communicate with each other through the switch. The switch can only enable communication within a Network, which means it can receive packets from a Host on the Network and deliver it to other systems within the same Network.
-
 \subsubsection{Routing}
 
-Imagine we have another2 machines in another Network at adress 192.168.2.0 and system adress according to this adress. How does a system in one Network reach a system in another Network?
+Imagine we have another 2 machines in another Network at adress 192.168.2.0 and system adress according to this adress. How does a system in one Network reach a system in another Network?
 
 Using \textbf{Routers}, a \textbf{Router} is an intelligent device which can connect two networks together. Is like another server with a lot of \textbf{Network Ports}. Since it connects to the two separate Networks it gets 2 IPs assigned, one on each Network, for example:
 
@@ -5322,7 +7474,9 @@ Using \textbf{Routers}, a \textbf{Router} is an intelligent device which can con
     \includegraphics[width=\textwidth]{pictures/ntw4.png}
 \end{figure}
 
-Imagine that system A wants to communicate with system C. How does the system A know where the Router is configured on the Network to send the packages through? The router is just another device set on the Network with an associated IP. This is why we configure the systems with a \textbf{gateway} or a \textbf{route}. If the Network was a room, the \textbf{gateway} would be the door to the external world (other Networks). The systems need to know where that door is. 
+Imagine that system A wants to communicate with system C. How does the system 
+A know where the Router is configured on the Network to send the packages through? 
+The router is just another device set on the Network with an associated IP. This is why we configure the systems with a \textbf{gateway} (\textbf{route}). If the Network was a room, the \textbf{gateway} would be the door to the external world (other Networks). The systems need to know where that door is. 
 
 \textbf{See existing routing configuration on a system:} it displays the kenel's routing table
 \begin{codetemplate}{}
@@ -5424,10 +7578,10 @@ $ echo 1 > /proc/sys/net/ipv4/ip_forward
 \end{codetemplate}
 
 \begin{blocktemplateIII}{WARNING}
-This way of configuration is not resilient to reboot, so if the system is reboot the configuration will be lost. To persist the configuration you should configure that in /ect/sysctl.conf adding:
+This way of configuration is not resilient to reboot, so if the system is reboot the configuration will be lost. To persist the configuration you should configure that in /etc/sysctl.conf adding:
 \begin{codetemplate}{}
 \begin{verbatim}
-$ sudo vim /ect/sysctl.conf
+$ sudo vim /etc/sysctl.conf
 ###############################
 ...
 net.ipv4.ip_forward=1
@@ -5487,7 +7641,7 @@ $ echo "nameserver         192.168.1.100" >> /etc/resolv.conf
 Or vim and add it at the end of the file.
 \begin{codetemplate}{}
 \begin{verbatim}
-$ sudo vim /etc/resol.conf
+$ sudo vim /etc/resolv.conf
 \end{verbatim}
 \end{codetemplate}
 
@@ -5495,7 +7649,7 @@ Once this is configured into a Host, everytime it comes up across a hostname tha
 
 \begin{blocktemplateIII}{WARNING}
 You can still have entries in your \verb|/etc/hosts| file, but it is not hardly recommended because it will override the configuration in \verb|/etc/resolv.conf| nameserver. Only use it when you are sure of what you are doing.
-////
+\\\\
 But this is default configuration, this order can be changed in the file \verb|/etc/nsswitch.conf|
 \begin{codetemplate}{}
 \begin{verbatim}
@@ -5549,10 +7703,46 @@ Let's see a FQDN structure in detail:
     \end{itemize}
 \end{enumerate}
 
-But how does this magical works in all Hosts in the world, for exampe the PC we are using. This is because when your system tries to reach any of these \textbf{FQDN's} your system first check at your \textbf{internal DNS server (on routeer)}, and it normally does not know who apps or google is, so it forwards your request to the internet. On the internet the IP adress of the server for example \textbf{maps.google.com} may be resolved with the help of \textbf{multiple DNS servers}. A \textbf{root DNS server} looks at your request and points you to a DNS server, which serves at (.com) TLD. So this \textbf{.com DNS servers} looks at your request and forwards it to \textbf{Google}, and \textbf{Google's DNS server} provides your system the IP of the server serving the maps.
+But how does this magical works in all Hosts in the world, for exampe the PC we are using. This is because when your system tries to reach any of these \textbf{FQDN's} your system first check at your \verb|/etc/hosts| or \textbf{internal DNS server}, and it normally does not know who apps or google is, so it forwards your request to
+\textbf{your internet provider DNS server (you can change this on your machine configuration)}. Then the DNS Server looks at your request and forwards it to the correct host.
+
+\textbf{Orange DNS (France)}
+\begin{itemize}
+    \item Primary DNS: \texttt{8.8.8.8}
+    \item Secondary DNS: \texttt{8.8.4.4}
+\end{itemize}
+
+\textbf{Google Public DNS}
+\begin{itemize}
+    \item Primary DNS: \texttt{8.8.8.8}
+    \item Secondary DNS: \texttt{8.8.4.4}
+\end{itemize}
+    
+\textbf{Cloudflare DNS}
+\begin{itemize}
+    \item Primary DNS: \texttt{1.1.1.1}
+    \item Secondary DNS: \texttt{1.0.0.1}
+\end{itemize}
+    
+\textbf{OpenDNS}
+\begin{itemize}
+    \item Primary DNS: \texttt{208.67.222.222}
+    \item Secondary DNS: \texttt{208.67.220.220}
+\end{itemize}
+    
+\textbf{Quad9 DNS}
+\begin{itemize}
+    \item Primary DNS: \texttt{9.9.9.9}
+    \item Secondary DNS: \texttt{149.112.112.112}
+\end{itemize}
+    
+\textbf{Comodo Secure DNS}
+\begin{itemize}
+    \item Primary DNS: \texttt{8.26.56.26}
+    \item Secondary DNS: \texttt{8.20.247.20}
+\end{itemize}
 
 But as this is so tedious, your \textbf{local DNS server (router)} may choose to cache this IP for a period of time, typically few seconds up to few minutes. That way, it does not have to go throught the whole process again each time.
-
 
 \subsubsection{Creating own FQDN}
 
@@ -5560,7 +7750,7 @@ Imagine we want to expose a service to the internet with different sub-services,
 
 So when you want to access your service from inside the Network from any host, the host at first will look in its local configuration file \verb|/etc/hosts|, then if nothing finds it will look in the \textbf{DNS server} configured in the \verb|/etc/resolv.conf|, whichi will tell you that pay.myapp.com is the IP 192.68....
 
-But we can one step further, inside my private network, maybe I want to use the servicde without the FQDN, because it is very long, maybe I want to use it by web, it is easier. Is this possible? The answer is yes, you must make an entry into your host's \verb|/etc/resolv.conf|:
+But we can one step further, inside my private network, maybe I want to use the service without the FQDN, because it is very long, maybe I want to use it by web, it is easier. Is this possible? The answer is yes, you must make an entry into your host's \verb|/etc/resolv.conf|:
 
 \begin{codetemplate}{}
 \begin{verbatim}
@@ -5592,15 +7782,15 @@ Network Namespaces in Linux are used by containers like Docker to implement Netw
 When you create a container you want to make sure that it is isolated, that it does not see any other processes on the host or any other containers, so we create a special room for it on our host using a Namespace, so the container only sees the processes run by it and thinks that it is on its own host XD. Nevertheless, the underlying host has visibility into all of the processes including those running inside containers. This can be seen listing system processes.
 
 \begin{itemize}
-    \item If you list the system processes on a running container, you will see only the processes executed by the container and the container process itself
-\begin{codetemplate}{}
+    \item If you list the system processes on a \textbf{running container}, you will see only the processes executed by the container and the container process itself
+\begin{codetemplate}{Inside Docker Container}
 \begin{verbatim}
 $ ps waux
 \end{verbatim}
 \end{codetemplate}
 
-    \item If you list the system processes on the underlying host you will see all the other processes runing in the host (a lot)
-\begin{codetemplate}{}
+    \item If you list the \textbf{system processes} on the underlying host you will see all the other processes runing in the host (a lot)
+\begin{codetemplate}{On the host directly}
 \begin{verbatim}
 $ ps waux
 \end{verbatim}
@@ -5609,9 +7799,132 @@ $ ps waux
 
 \subsubsection{Namespaces for Networking}
 
-When we create a container, our host has its own routing and ARP tables with information about res of the Network. We want to seal all of those deatils from the container, so when the container is created, we create a Network Namespace for it, that way it has no visibility to any network-related information on the host. Within its Namespace, the container can have its own virtual interfaces, routing and ARP tables, the container has its own interface.
+When it comes to networking, our host has its own interfaces that connect to the LAN (Local Area Network), as well as the routing and ARP tables with information about res of the Network. We want to seal all of those deatils from the container, so when the container is created, we create a Network Namespace for it, that way it has no visibility to any network-related information on the host. Within its Namespace, the container can have its own virtual interfaces, routing and ARP tables.
 
-This section is very complicated, it is explained to understand how docker manage the Network of its container, I won't document this part, because it can be an entire lecture by itself. Anyhow, if you want to know more information, check the associated video in the CKA Course.
+If you want to create a new Network Namespace on a Linux host:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ ip netns add <net_namespace_name>
+\end{verbatim}
+\end{codetemplate}
+
+To list the Network Namespaces:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ ip netns
+\end{verbatim}
+\end{codetemplate}
+
+If you want to execute a command inside a Network Interface:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ ip netns exec <net_namespace_name> <command>
+\end{verbatim}
+\end{codetemplate}
+
+For example to check the isolation of the network namespace:
+\begin{itemize}
+    \item To see the ARP table inside the network namespace:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ ip netns exec <net_namespace_name> arp
+\end{verbatim}
+\end{codetemplate}
+    \item To check the network interfaces inside the network namespace:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ ip netns exec <net_namespace_name> ip link
+\end{verbatim}
+\end{codetemplate}
+    \item To check the routing network inside the network namespace:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ ip netns exec <net_namespace_name> route
+\end{verbatim}
+\end{codetemplate}
+\end{itemize}
+
+To see the ARP table:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ arp
+\end{verbatim}
+\end{codetemplate}
+
+\begin{blocktemplateII}{NOTE}
+The ARP (Address Resolution Protocol) table is a crucial component of network communication, specifically within local networks. It functions as a mapping between IP addresses (logical addresses used in Layer 3 of the OSI model) and MAC addresses (physical hardware addresses used in Layer 2).
+\\\\
+When devices on a network communicate, data is transmitted using MAC addresses at the hardware level. However, applications and services use IP addresses. The ARP table helps bridge this gap by maintaining a lookup table that translates an IP address into the corresponding MAC address of a device within the same local network.
+\end{blocktemplateII}
+
+So as they are networking isolated, they have no network connectivity, no networks on their own. The first think we should do is stablish connectivity between namespaces using a \textbf{virtual internet pair (virtual ethernet veth)}:
+So create the veth:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ ip link add veth-<net_namespace_name1> type veth peer 
+    name veth-<net_namespace_name2>
+\end{verbatim}
+\end{codetemplate}
+
+Associate it to the network namespaces:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ ip link set veth-<net_namespace_name1> netns <net_namespace_name1>
+\end{verbatim}
+\end{codetemplate}
+\begin{codetemplate}{}
+\begin{verbatim}
+$ ip link set veth-<net_namespace_name2> netns <net_namespace_name2>
+\end{verbatim}
+\end{codetemplate}
+
+Assign IP address to each namespace
+\begin{codetemplate}{}
+\begin{verbatim}
+$ ip -n <net_namespace_name1> addr add <IP> dev veth-<net_namespace_name1>
+\end{verbatim}
+\end{codetemplate}
+\begin{codetemplate}{}
+\begin{verbatim}
+$ ip -n <net_namespace_name2> addr add <IP> dev veth-<net_namespace_name2>
+\end{verbatim}
+\end{codetemplate}
+
+Bring up the interfaces:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ ip -n <net_namespace_name1> set veth-<net_namespace_name1> up
+\end{verbatim}
+\end{codetemplate}
+\begin{codetemplate}{}
+\begin{verbatim}
+$ ip  -n <net_namespace_name2> set veth-<net_namespace_name2> up
+\end{verbatim}
+\end{codetemplate}
+
+The namespace will be able to see each other.
+
+But what you would de when we have more than 2 namespaces and we have a lot of namespaces? We will need to create a \textbf{Virtual Network} inside the host. To create a Virtual Network:
+\begin{itemize}
+    \item At first you need to create a \textbf{Virtual Switch}, which for our host will be just another interface.
+\begin{codetemplate}{}
+\begin{verbatim}
+$ ip link add v-net-0 type bridge
+\end{verbatim}
+\end{codetemplate}
+\begin{codetemplate}{}
+\begin{verbatim}
+$ ip link set v-net-0 up
+\end{verbatim}
+\end{codetemplate}
+    \item Then connect the namespaces to thes Virtual Network Switch.
+\begin{codetemplate}{}
+\begin{verbatim}
+$ ip link add veth-<net_namespace_name1> type veth peer 
+    name veth-<net_namespace_name1>-bridge
+\end{verbatim}
+\end{codetemplate}
+\end{itemize}
 
 %======================================================
 \newpage
@@ -5717,13 +8030,17 @@ $ arp
 \end{verbatim}
 \end{codetemplate}
 
+\begin{blocktemplateII}{NOTE}
+The ARP (Address Resolution Protocol) table is a crucial component of network communication, specifically within local networks. It functions as a mapping between IP addresses (logical addresses used in Layer 3 of the OSI model) and MAC addresses (physical hardware addresses used in Layer 2).
+\\\\
+When devices on a network communicate, data is transmitted using MAC addresses at the hardware level. However, applications and services use IP addresses. The ARP table helps bridge this gap by maintaining a lookup table that translates an IP address into the corresponding MAC address of a device within the same local network.
+\end{blocktemplateII}
+
 \begin{codetemplate}{}
 \begin{verbatim}
 $ netstat -plnt
 \end{verbatim}
 \end{codetemplate}
-
-\subsubsection{Lab - Playing with Networking in K8s Cluster}
 
 \textcolor{red}{\textbf{PENDING}}
 
