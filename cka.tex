@@ -3914,18 +3914,27 @@ $ docker logs <container_name_or_id> [-f]
 \end{codetemplate}
 
 \subsubsection{Logs in K8s}
+\verb|-f| is to read them when the container is printing:
 \begin{codetemplate}{}
 \begin{verbatim}
 $ kubectl logs <pod_name> [-c <container_name>] [-f]
 \end{verbatim}
 \end{codetemplate}
 
-\subsubsection{Logs in K8s}
+To retrieve logs from all containers:
 \begin{codetemplate}{}
 \begin{verbatim}
 $ kubectl logs <pod_name> --all-containers
 \end{verbatim}
 \end{codetemplate}
+
+To retrieve logs from previous pods from a deployment:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ kubectl logs <pod_name> --previous
+\end{verbatim}
+\end{codetemplate}
+
 
 \subsection{Logs with K8s-Ready EFK}
 
@@ -9214,6 +9223,8 @@ Verify that \verb|net.ipv4.ip_forward| is set to 1 with:
 \begin{codetemplate}{}
 \begin{verbatim}
 $ sysctl net.ipv4.ip_forward
+$ sysctl net.bridge.bridge-nf-call-ip6tables
+$ sysctl net.bridge.bridge-nf-call-iptables
 \end{verbatim}
 \end{codetemplate}
 
@@ -9333,8 +9344,8 @@ Add the appropriate Kubernetes apt repository. Please note that this repository 
 \begin{verbatim}
 # This overwrites any existing configuration in 
 # /etc/apt/sources.list.d/kubernetes.list
-echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] \
-    https://pkgs.k8s.io/core:/stable:/v1.31/deb/ /' | \
+echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] \
+    https://pkgs.k8s.io/core:/stable:/v1.31/deb/ /" | \
     sudo tee /etc/apt/sources.list.d/kubernetes.list
 \end{verbatim}
 \end{codetemplate}
@@ -9396,10 +9407,17 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 \end{verbatim}
 \end{codetemplate}
 
-Now you should be able to connect to your cluster!
+Now we should be able to connect to out cluster and see our node!
 \begin{codetemplate}{}
 \begin{verbatim}
-$ kubectl get po
+$ kubectl get nodes
+\end{verbatim}
+\end{codetemplate}
+
+If you need to recreate a token:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ kubeadm token create --print-join-command
 \end{verbatim}
 \end{codetemplate}
 
@@ -9413,11 +9431,25 @@ $ sudo kubeadm join <LOAD_BALANCER_DNS>:<PORT> --token <TOKEN> \
 \end{verbatim}
 \end{codetemplate}
 
+Check on the main control-plane node:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ kubectl get nodes
+\end{verbatim}
+\end{codetemplate}
+
 \subsubsection{Add worker nodes}
 Copy the command in the output of the \verb|kubeadm init|:
 \begin{codetemplate}{}
 \begin{verbatim}
 $ kubeadm join <master_node_IP> --token ...
+\end{verbatim}
+\end{codetemplate}
+
+Check on the main control-plane node:
+\begin{codetemplate}{}
+\begin{verbatim}
+$ kubectl get nodes
 \end{verbatim}
 \end{codetemplate}
 
@@ -9505,6 +9537,13 @@ $ kubectl logs <pod_name>
 \end{verbatim}
 \end{codetemplate}
 
+Retrieve logs from past pods:
+\begin{codetemplate}
+\begin{verbatim}
+$ kubectl logs <pod_name> --previous
+\end{verbatim}
+\end{codetemplate}
+
 \subsection{Resource Creation}
 As we might have seen already, it is a bit difficult to create and edit YAML files 
 from scratch. We can use \textbf{imperative} commands to help us in generating a 
@@ -9580,6 +9619,14 @@ $ kubectl replace --force -f /tmp/kubectl-edit-12345.yaml
 \end{itemize}
 \end{blocktemplateI}
 
+\subsubsection{Declarative}
+Apply:
+\begin{codetemplate}
+\begin{verbatim}
+$ kubectl apply -f resource_file.yaml [-f resource_file_2.yaml]
+\end{verbatim}
+\end{codetemplate}
+
 \subsection{Pods}
 Most used - \verb|run| (\href{https://jamesdefabia.github.io/docs/user-guide/kubectl/kubectl_run/}{Oficial Doc}):
 \begin{codetemplate}{}
@@ -9615,13 +9662,173 @@ $ kubectl expose <obj-type> <obj-name> [--port=port] [--protocol=TCP|UDP] \
 By default when \verb|kubectl expose| is used, a ClusterIP service is created, but we can change it using the \verb|--type| label.
 \end{blocktemplate}
 
-\subsubsection{Declarative}
-Apply:
+\subsection{Nodes}
+To check the status of the nodes, you will need to find on \textbf{conditions}:
 \begin{codetemplate}
 \begin{verbatim}
-$ kubectl apply -f resource_file.yaml [-f resource_file_2.yaml]
+$ kubectl describe node <node_name>
 \end{verbatim}
 \end{codetemplate}
+
+When \verb|kubelet| is not ready you will see something like:
+
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{pictures/kubelet1.png}
+\end{figure}
+
+When the \verb|kubelet| is running, the different flags mean:
+\begin{itemize}
+    \item \verb|OutOfDisk:| indicates whether the node is out of disk space required to add new pods. Kubernetes monitors the disk space on each node, and if the disk is almost full, the OutOfDisk status will be set to \verb|True|, preventing additional pods from being scheduled to avoid disk exhaustion.
+    \item \verb|MemoryPressure:| shows whether the node is under memory pressure, meaning that available memory is running low. Kubernetes tracks this to prevent running workloads from crashing due to memory shortage.
+    \item \verb|DiskPressure:| indicates that a node is running low on disk space, particularly the storage used by ephemeral data. Ephemeral storage refers to temporary storage associated with the lifecycle of pods and is commonly used for:
+    \begin{itemize}
+        \item Temporary files generated by applications.
+        \item Logs written by applications and Kubernetes components.
+        \item Container images and any local cache used by the running applications.
+    \end{itemize}
+    \item \verb|PIDPressure:| reflects whether the node is under process (PID) pressure, meaning it has limited capacity to create new processes. PIDPressure is a condition Kubernetes uses to detect when a node is approaching its limit on the number of processes (PIDs) it can create. Every operating system has a maximum number of process IDs it can handle, set by the \verb|kernel.pid_max| parameter
+    \item \verb|Ready:| it only will be true if kubelet is properly running on the node the other specs are True
+\end{itemize}
+
+\begin{blocktemplateI}{Note}
+The kubelet, which is the agent running on each Kubernetes node, continuously monitors these specs. When it detects that disk/memory/PID are above a certain threshold for ephemeral storage, it sets the conditions to True. These thresholds are configurable, and administrators can define limits based on their workload requirements.
+\end{blocktemplateI}
+
+\begin{blocktemplateII}{Note}
+It can be useful to check \textbf{LastHeartbeatTime}, it will indicate the last time the node was responding.
+\end{blocktemplateII}
+
+\subsubsection{kubelet}
+Remember that \textbf{kubelet} is always running like a \textbf{service} on the nodes, not like K8s resources, so to monitor its state:
+\begin{codetemplate}
+\begin{verbatim}
+$ systemctl status kubelet
+\end{verbatim}
+\end{codetemplate}
+\begin{codetemplate}
+\begin{verbatim}
+$ journalctl -xeu kubelet
+\end{verbatim}
+\end{codetemplate}
+
+The configuration file for \textbf{kubelet} is under:
+\begin{codetemplate}
+\begin{verbatim}
+/var/lib/kubelet/config.yaml
+\end{verbatim}
+\end{codetemplate}
+
+The certificates for \textbf{kubelet} are under:
+\begin{codetemplate}
+\begin{verbatim}
+/var/lib/kubelet/
+\end{verbatim}
+\end{codetemplate}
+
+The \textbf{kubeconfig} file used by \textbf{kubelet} is under:
+\begin{codetemplate}
+\begin{verbatim}
+/etc/kubernetes/kubelet.conf
+\end{verbatim}
+\end{codetemplate}
+
+\begin{blocktemplate}{Note}
+This can be checked watching logs of \verb|kubelet.service|
+\begin{codetemplate}
+\begin{verbatim}
+$ systemctl status kubelet | grep -i config
+\end{verbatim}
+\end{codetemplate}
+\begin{codetemplate}
+\begin{verbatim}
+$ systemctl status kubelet | grep -i kubeconfig
+\end{verbatim}
+\end{codetemplate}
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{pictures/kubelet2.png}
+\end{figure}
+
+If the \verb|kubelet.service| is not working:
+\begin{codetemplate}
+\begin{verbatim}
+$ journalctl -xeu kubelet | grep -i config file
+\end{verbatim}
+\end{codetemplate}
+\end{blocktemplate}
+
+\begin{blocktemplateIII}{Warning}
+If the \verb|kubelet.service| is up and running but you see the log:
+\begin{codetemplate}
+\begin{verbatim}
+dial tcp 192.9.193.2:6553: connect: connection refused" logger="UnhandledError"
+\end{verbatim}
+\end{codetemplate}
+Check:
+\begin{itemize}
+    \item \textbf{kubelet.service kubeconfig:} \verb|/etc/kubernetes/kubelet.conf|
+    \item Network connectivity 
+\end{itemize}
+\end{blocktemplateIII}
+
+\subsubsection{ControlPlane Components running as Pods}
+As the components are running as Pods, to check problems related to this components you should always execute:
+
+\begin{codetemplate}
+\begin{verbatim}
+$ kubectl get po -n kube-system
+\end{verbatim}
+\end{codetemplate}
+
+\begin{codetemplate}
+\begin{verbatim}
+$ kubectl describe <failing_pod> -n kube-system
+\end{verbatim}
+\end{codetemplate}
+
+\begin{codetemplate}
+\begin{verbatim}
+$ kubectl logs <failing_pod> -n kube-system
+\end{verbatim}
+\end{codetemplate}
+
+\paragraph{Resources Running}
+\begin{itemize}
+    \item \verb|coredns-xxxxx-yyyy:| deployment
+    \item \verb|etcd-controlplane:| static pod, deployed by default by kubeadm.
+    \item \verb|kube-apiserver-controlplane:| static pod, deployed by default by kubeadm.
+    \item \verb|kube-controller-manager-controlplane:| static pod, deployed by default by kubeadm.
+    \item \verb|kube-proxy-lglqd:| daemonset, deployed by default by kubeadm.
+    \item \verb|weave-net-b7vhw :| daemonset, you need to deploy it as network solution.
+\end{itemize}
+
+The static pods use to be configured in (but it is configurable in kubelet \verb|/var/lib/kubelet/config.yaml|):
+\begin{codetemplate}
+\begin{verbatim}
+$ /etc/kubernetes/manifests
+\end{verbatim}
+\end{codetemplate}
+
+For deploying network solution:
+\begin{codetemplate}
+\begin{verbatim}
+$ kubectl apply -f https://reweave.azurewebsites.net/k8s/v1.29/net.yaml
+\end{verbatim}
+\end{codetemplate}
+
+\paragraph{Resources Configuration}
+As they are running as Deployment, DaemonSets or Static Pods, the configuration is not on the node, it is inside configmaps. So to check / modify any configuration file you should check inside the associated \verb|ConfigMaps:|
+
+For deploying network solution:
+\begin{codetemplate}
+\begin{verbatim}
+$ kubectl get cm -n kube-system
+\end{verbatim}
+\end{codetemplate}
+
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{pictures/getcm.png}
+\end{figure}
+
 
 \subsection{Kubectl Config}
 View full configuration of \verb|kubeconfig file| (by default \verb|~/.kube/config|)
